@@ -1,0 +1,23 @@
+{
+    "name": "symlink/laravel-helper",
+    "description": "A Helper developed by Symlink Solutions",
+    "type": "library",
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Symlink\\LaravelHelper\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Symlink\\LaravelHelper\\SymlinkLaravelHelperServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "require-dev": {
+        "orchestra/testbench": "9.0"
+    }
+}
