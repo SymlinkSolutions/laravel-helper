@@ -31,23 +31,33 @@ class InstallSymlinkPackage extends Command {
             '--tag' => "symlink-vite"
         ]);
 
-        // Replace vite.config.js
-        // $this->replaceViteConfig($force);
+        $this->removeDefaultRoute();
 
         $this->info('Installed Symlink\LaravelHelper');
     }
     // ----------------------------------------------------------------------------------------------------
-    protected function replaceViteConfig($force) {
-        $viteConfigSource = "{$this->root}/vite.config.js";
-        $viteConfigDestination = base_path('vite.config.js');
+    protected function removeDefaultRoute() {
+        $webRoutesPath = base_path('routes/web.php');
 
-        if (File::exists($viteConfigDestination) && !$force) {
-            $this->info('vite.config.js already exists and was not overwritten.');
+        if (!File::exists($webRoutesPath)) {
+            $this->info('web.php file does not exist.');
             return;
         }
 
-        File::copy($viteConfigSource, $viteConfigDestination);
-        $this->info('vite.config.js has been replaced.');
+        $content = File::get($webRoutesPath);
+
+        // Define the pattern to match the default route (assuming it's the default Laravel welcome route)
+        $pattern = "/Route::get\('\/', function \(\) \{\s*return view\('welcome'\);\s*\}\);\s*/";
+
+        // Remove the default route
+        $newContent = preg_replace($pattern, '', $content);
+
+        if ($content === $newContent) {
+            $this->info('No default route found to remove.');
+        } else {
+            File::put($webRoutesPath, $newContent);
+            $this->info('Default route has been removed from web.php.');
+        }
     }
     // ----------------------------------------------------------------------------------------------------
 }
