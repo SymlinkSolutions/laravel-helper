@@ -3,13 +3,15 @@
     "description": "A Helper developed by Symlink Solutions",
     "type": "library",
     "require": {
-        "twbs/bootstrap": "^5.3",
-        "laravel/breeze": "^2.1"
+        "twbs/bootstrap": "^5.3"
     },
     "autoload": {
         "psr-4": {
             "Symlink\\LaravelHelper\\": "src/"
-        }
+        },
+        "files":[
+            "src/Helpers/Ui/Form.php"
+        ]
     },
     "extra": {
         "laravel": {

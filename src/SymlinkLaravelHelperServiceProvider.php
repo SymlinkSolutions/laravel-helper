@@ -32,6 +32,9 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
     public function register() {
         $this->mergeConfigFrom("{$this->root}/config/symlinkLaravelHelper.php", 'laravel-helper');
         // $this->app->register(EventServiceProvider::class);
+        $this->app->singleton('form', function ($app) {
+            return new \Symlink\LaravelHelper\Helpers\Ui\FormHelper();
+        });
     }
     // ----------------------------------------------------------------------------------------------------
     /**
@@ -40,6 +43,8 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot(Kernel $kernel) {
+        $this->app->alias('form', \Symlink\LaravelHelper\Facades\Form::class);
+
         $this->loadPublishes();
         $this->loadMigrationsFrom("{$this->root}/database/migrations");
         $this->loadViewsFrom("{$this->root}/resources/views", 'symlink');
@@ -48,11 +53,37 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
         }
         $this->registerRoutes();
         $this->loadComponents();
+        $this->mergeAliases();
 
         // $kernel->pushMiddleware(CapitalizeTitle::class);
     }
     // ----------------------------------------------------------------------------------------------------
     // Other Functions
+    // ----------------------------------------------------------------------------------------------------
+    protected function mergeAliases() {
+        // Define package aliases
+        $packageAliases = [
+            'Form' => \Symlink\LaravelHelper\Facades\Form::class,
+            // Add other aliases here
+        ];
+
+        $configPath = base_path('config/app.php');
+
+        // Check if the config file exists
+        if (file_exists($configPath)) {
+            $config = require $configPath;
+
+            // Merge package aliases with existing aliases
+            $existingAliases = $config['aliases'] ?? [];
+            $mergedAliases = array_merge($existingAliases, $packageAliases);
+
+            // Update the config file
+            $config['aliases'] = $mergedAliases;
+
+            // Write the updated config back to the file
+            file_put_contents($configPath, "<?php\n\nreturn " . var_export($config, true) . ";\n");
+        }
+    }
     // ----------------------------------------------------------------------------------------------------
     protected function loadCommands() {
         $this->commands([
