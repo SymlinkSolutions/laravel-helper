@@ -63,22 +63,16 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
     // ----------------------------------------------------------------------------------------------------
     protected function loadPublishes() {
         $this->publishes([
-            "{$this->root}/config/symlinkLaravelHelper.php" => config_path('symlinkLaravelHelper.php'),
+            "{$this->root}/publishable/config/symlinkLaravelHelper.php" => config_path('symlinkLaravelHelper.php'),
         ], "symlink-config");
 
-        // TODO notification publish needs adjustment
         $this->publishes([
-            "{$this->root}/src/View/Components/Notification.php" => app_path('View/Components/Notification.php'),
-            "{$this->root}/resources/views/components/notification.blade.php" => resource_path('views/components/notification.blade.php'),
-        ], "symlink-notification");
-
-        $this->publishes([
-            "{$this->root}/resources/publishable/sass" => resource_path('sass'),
-            "{$this->root}/resources/publishable/js" => resource_path('js'),
+            "{$this->root}/publishable/resources/sass" => resource_path('sass'),
+            "{$this->root}/publishable/resources/js" => resource_path('js'),
         ], "symlink-assets");
 
         $this->publishes([
-            "{$this->root}/vite.config.js" => "vite.config.js",
+            "{$this->root}/publishable/vite.config.js" => "vite.config.js",
         ], "symlink-vite");
     }
     // ----------------------------------------------------------------------------------------------------
