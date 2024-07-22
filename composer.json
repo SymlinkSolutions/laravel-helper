@@ -3,7 +3,7 @@
     "description": "A Helper developed by Symlink Solutions",
     "type": "library",
     "require": {
-        "twbs/bootstrap": "5.3.3",
+        "twbs/bootstrap": "^5.3",
         "laravel/breeze": "^2.1"
     },
     "autoload": {

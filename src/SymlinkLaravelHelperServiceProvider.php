@@ -66,6 +66,7 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
             "{$this->root}/config/symlinkLaravelHelper.php" => config_path('symlinkLaravelHelper.php'),
         ], "symlink-config");
 
+        // TODO notification publish needs adjustment
         $this->publishes([
             "{$this->root}/src/View/Components/Notification.php" => app_path('View/Components/Notification.php'),
             "{$this->root}/resources/views/components/notification.blade.php" => resource_path('views/components/notification.blade.php'),
@@ -75,6 +76,10 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
             "{$this->root}/resources/publishable/sass" => resource_path('sass'),
             "{$this->root}/resources/publishable/js" => resource_path('js'),
         ], "symlink-assets");
+
+        $this->publishes([
+            "{$this->root}/vite.config.js" => "vite.config.js",
+        ], "symlink-vite");
     }
     // ----------------------------------------------------------------------------------------------------
     protected function loadComponents() {

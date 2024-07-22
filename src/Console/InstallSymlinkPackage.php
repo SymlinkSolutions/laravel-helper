@@ -26,8 +26,13 @@ class InstallSymlinkPackage extends Command {
             '--force' => $force
         ]);
 
+        $this->call('vendor:publish', [
+            "--force" => $force,
+            '--tag' => "symlink-vite"
+        ]);
+
         // Replace vite.config.js
-        $this->replaceViteConfig($force);
+        // $this->replaceViteConfig($force);
 
         $this->info('Installed Symlink\LaravelHelper');
     }
