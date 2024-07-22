@@ -1,23 +1,22 @@
 <?php
 
-namespace Symlink\LaravelHelper\View\Components;
+namespace Symlink\LaravelHelper\View\Components\Layouts;
 
 use Illuminate\View\Component;
 
-class Notification extends Component {
+class GuestLayout extends Component {
     // ----------------------------------------------------------------------------------------------------
     //  Properties
     // ----------------------------------------------------------------------------------------------------
-    public $message;
+
     // ----------------------------------------------------------------------------------------------------
     //  Functions
     // ----------------------------------------------------------------------------------------------------
-    public function __construct($message) {
-        $this->message = $message;
+    public function __construct() {
     }
     // ----------------------------------------------------------------------------------------------------
     public function render() {
-        return view('symlink::components.notification');
+        return view('symlink::guest.layout.guest');
     }
     // ----------------------------------------------------------------------------------------------------
 }

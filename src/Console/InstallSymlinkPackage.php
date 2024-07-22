@@ -6,43 +6,43 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 
 class InstallSymlinkPackage extends Command {
-
-    protected $signature = 'symlink:install';
-
+    // ----------------------------------------------------------------------------------------------------
+    // Properties
+    // ----------------------------------------------------------------------------------------------------
+    protected $root = __DIR__."/../..";
+    protected $signature = 'symlink:install {--force : Overwrite any existing files}';
+    protected $description = 'Install the Symlink package and run the resource setup';
+    // ----------------------------------------------------------------------------------------------------
+    // Functions
+    // ----------------------------------------------------------------------------------------------------
     public function handle() {
         $this->info('Installing Symlink\LaravelHelper...');
 
-        $this->info('Publishing configuration...');
+        // Option to force the publish
+        $force = $this->option('force');
 
-        // if (!$this->configExists('blogpackage.php')) {
-        //     $this->publishConfiguration();
-        //     $this->info('Published configuration');
-        // } else {
-        //     if ($this->shouldOverwriteConfig()) {
-        //         $this->info('Overwriting configuration file...');
-        //         $this->publishConfiguration($force = true);
-        //     } else {
-        //         $this->info('Existing configuration was not overwritten');
-        //     }
-        // }
+        // Call the ResourceSetup command
+        $this->call('symlink:resource-setup', [
+            '--force' => $force
+        ]);
+
+        // Replace vite.config.js
+        $this->replaceViteConfig($force);
 
         $this->info('Installed Symlink\LaravelHelper');
     }
+    // ----------------------------------------------------------------------------------------------------
+    protected function replaceViteConfig($force) {
+        $viteConfigSource = "{$this->root}/vite.config.js";
+        $viteConfigDestination = base_path('vite.config.js');
 
-    private function configExists($fileName)  {
-        return File::exists(config_path($fileName));
-    }
-
-    private function publishConfiguration($forcePublish = false) {
-        $params = [
-            '--provider' => "JohnDoe\BlogPackage\BlogPackageServiceProvider",
-            '--tag' => "config"
-        ];
-
-        if ($forcePublish === true) {
-            $params['--force'] = true;
+        if (File::exists($viteConfigDestination) && !$force) {
+            $this->info('vite.config.js already exists and was not overwritten.');
+            return;
         }
 
-        $this->call('vendor:publish', $params);
+        File::copy($viteConfigSource, $viteConfigDestination);
+        $this->info('vite.config.js has been replaced.');
     }
+    // ----------------------------------------------------------------------------------------------------
 }

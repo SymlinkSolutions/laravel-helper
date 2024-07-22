@@ -2,3 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::get("login", function(){
+    return view('symlink::guest.index.login');
+})->name("login");

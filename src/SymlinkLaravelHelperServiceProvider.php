@@ -7,6 +7,8 @@ use Illuminate\Support\ServiceProvider;
 use Symlink\LaravelHelper\Console\InstallSymlinkPackage;
 use Symlink\LaravelHelper\View\Components\Notification;
 use Illuminate\Contracts\Http\Kernel;
+use Symlink\LaravelHelper\Console\ResourceSetup;
+use Symlink\LaravelHelper\View\Components\Layouts\GuestLayout;
 
 /**
  * Examples and Guidence from
@@ -38,13 +40,14 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot(Kernel $kernel) {
+        $this->loadPublishes();
         $this->loadMigrationsFrom("{$this->root}/database/migrations");
         $this->loadViewsFrom("{$this->root}/resources/views", 'symlink');
         if ($this->app->runningInConsole()) {
             $this->loadCommands();
-            $this->loadPublishes();
         }
         $this->registerRoutes();
+        $this->loadComponents();
 
         // $kernel->pushMiddleware(CapitalizeTitle::class);
     }
@@ -54,39 +57,36 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
     protected function loadCommands() {
         $this->commands([
             InstallSymlinkPackage::class,
+            ResourceSetup::class,
         ]);
     }
     // ----------------------------------------------------------------------------------------------------
     protected function loadPublishes() {
         $this->publishes([
             "{$this->root}/config/symlinkLaravelHelper.php" => config_path('symlinkLaravelHelper.php'),
-        ], 'config');
+        ], "symlink-config");
 
         $this->publishes([
             "{$this->root}/src/View/Components/Notification.php" => app_path('View/Components/Notification.php'),
             "{$this->root}/resources/views/components/notification.blade.php" => resource_path('views/components/notification.blade.php'),
-        ], 'notification');
+        ], "symlink-notification");
+
+        $this->publishes([
+            "{$this->root}/resources/publishable/sass" => resource_path('sass'),
+            "{$this->root}/resources/publishable/js" => resource_path('js'),
+        ], "symlink-assets");
     }
     // ----------------------------------------------------------------------------------------------------
     protected function loadComponents() {
         $this->loadViewComponentsAs('symlink', [
-            Notification::class
+            'layouts-guest-layout' => GuestLayout::class,
+            Notification::class,
         ]);
     }
     // ----------------------------------------------------------------------------------------------------
     protected function registerRoutes() {
-        Route::group($this->routeConfiguration(), function () {
-            $this->loadRoutesFrom("{$this->root}/routes/developer.php");
-        });
-
+        $this->loadRoutesFrom("{$this->root}/routes/developer.php");
         $this->loadRoutesFrom("{$this->root}/routes/auth.php");
-    }
-    // ----------------------------------------------------------------------------------------------------
-    protected function routeConfiguration() {
-        return [
-            'prefix' => config('symlink.developer'),
-            // 'middleware' => config('.middleware'),
-        ];
     }
     // ----------------------------------------------------------------------------------------------------
 }
