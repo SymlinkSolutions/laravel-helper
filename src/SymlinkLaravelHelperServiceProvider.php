@@ -7,6 +7,7 @@ use Symlink\LaravelHelper\Console\InstallSymlinkPackage;
 use Symlink\LaravelHelper\View\Components\Notification;
 use Illuminate\Contracts\Http\Kernel;
 use Symlink\LaravelHelper\Console\ResourceSetup;
+use Symlink\LaravelHelper\View\Components\Image;
 use Symlink\LaravelHelper\View\Components\Layouts\GuestLayout;
 
 /**
@@ -34,6 +35,9 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
         $this->app->singleton('form', function ($app) {
             return new \Symlink\LaravelHelper\Helpers\Ui\FormHelper();
         });
+        $this->app->singleton('html', function ($app) {
+            return new \Symlink\LaravelHelper\Helpers\Ui\HtmlHelper();
+        });
     }
     // ----------------------------------------------------------------------------------------------------
     /**
@@ -42,7 +46,8 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot(Kernel $kernel) {
-        $this->app->alias('form', \Symlink\LaravelHelper\Facades\Form::class);
+        // $this->app->alias('form', \Symlink\LaravelHelper\Facades\Form::class);
+        // $this->app->alias('html', \Symlink\LaravelHelper\Facades\Html::class);
 
         $this->loadPublishes();
         $this->loadMigrationsFrom("{$this->root}/database/migrations");
@@ -63,7 +68,7 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
         // Define package aliases
         $packageAliases = [
             'Form' => \Symlink\LaravelHelper\Facades\Form::class,
-            // Add other aliases here
+            'Html' => \Symlink\LaravelHelper\Facades\Html::class,
         ];
 
         $configPath = base_path('config/app.php');

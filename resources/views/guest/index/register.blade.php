@@ -7,14 +7,14 @@
                 <div class="card">
                     
                     <div class="row">
-                        <div class="col-5 p-3">
-                            <img class="rounded overflow-hidden" src="https://via.placeholder.com/250" alt="Placeholder Image" height="250px" width="250px" />
+                        <div class="col-5 p-3 d-flex align-items-center justify-content-center">
+                            {!! Html::image() !!}
                         </div>
                         <div class="col-7 p-3">
                             <div class="row">
                                 <p class="fs-4">Register</p>
                             </div>
-                            <form action="" method="POST">
+                            <form action="{{ route('register') }}" method="POST">
                                 @csrf
                                 @method('post')
                                 
@@ -32,7 +32,15 @@
                                     "hidden" => true
                                 ]) !!}
 
-                                {!! Form::submit("Register") !!}
+                                <div class="row">
+                                    <div class="col-6">
+                                        {!! Form::submit("Register") !!}
+                                    </div>
+                                    <div class="col-6">
+                                        <a href="{{ route('login') }}" class="btn btn-outline-secondary w-100">Back To Login</a>
+                                    </div>
+                                </div>
+
 
                             </form>
                         </div>

@@ -4,7 +4,7 @@
 ])
 
 
-<button type="submit" id="submit" {{ $attributes->merge(['class' => 'btn btn-primary']) }}>
+<button type="submit" id="submit" {{ $attributes->merge(['class' => 'btn btn-primary w-100']) }}>
     <i class="{{ $icon }}"></i>
     {{ $label }}
 </button>
