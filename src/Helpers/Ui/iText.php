@@ -6,13 +6,20 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\View;
 use Symlink\LaravelHelper\Helpers\Ui\Intf\FormInput;
+use Symlink\LaravelHelper\Helpers\Ui\Traits\Component;
 
 class iText implements FormInput {
-
+    // ----------------------------------------------------------------------------------------------------
+    use Component;
+    // ----------------------------------------------------------------------------------------------------
+    //  Properties
+    // ----------------------------------------------------------------------------------------------------
     protected $name;
     protected $value;
     protected $options;
-
+    // ----------------------------------------------------------------------------------------------------
+    //  Functions
+    // ----------------------------------------------------------------------------------------------------
     public function __construct($name, $label, $value = '', $options = []) {
         $this->options = array_merge([
             'id' => $name,
@@ -25,7 +32,7 @@ class iText implements FormInput {
         $this->name = $name;
         $this->value = $value;
     }
-
+    // ----------------------------------------------------------------------------------------------------
     public function build() {
         $error = $this->hasError($this->name);
         $errorMessage = $this->getErrorMessage($this->name);
@@ -35,12 +42,12 @@ class iText implements FormInput {
 
         return View::make('symlink::components.input.itext', $this->options)->render();
     }
-
+    // ----------------------------------------------------------------------------------------------------
     protected function hasError($id) {
         // Check for validation errors in the session
         return Session::has('errors') && Session::get('errors')->has($id);
     }
-
+    // ----------------------------------------------------------------------------------------------------
     protected function getErrorMessage($id) {
         // Retrieve the first error message for the given field
         if (Session::has('errors')) {
@@ -49,9 +56,10 @@ class iText implements FormInput {
         }
         return '';
     }
-
+    // ----------------------------------------------------------------------------------------------------
     protected function getOldValue($id) {
         // Retrieve old input value from the session
         return old($id, $this->value);
     }
+    // ----------------------------------------------------------------------------------------------------
 }

@@ -1,9 +1,3 @@
-@props([
-    'src' => '',
-    'alt' => '',
-    'width' => '',
-    'height' => '',
-])
 
 
 <img

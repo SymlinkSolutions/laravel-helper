@@ -6,8 +6,11 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\View;
 use Symlink\LaravelHelper\Helpers\Ui\Intf\FormInput;
+use Symlink\LaravelHelper\Helpers\Ui\Traits\Component;
 
 class Image implements FormInput {
+    // ----------------------------------------------------------------------------------------------------
+    use Component;
     // ----------------------------------------------------------------------------------------------------
     //  Properties
     // ----------------------------------------------------------------------------------------------------
@@ -36,13 +39,20 @@ class Image implements FormInput {
     // ----------------------------------------------------------------------------------------------------
     public function get_src($src) {
         if (!$src){
-            return "https://via.placeholder.com/{$this->options['width']}";
+            if ($this->options['height']){
+                return "https://fakeimg.pl/{$this->options['width']}x{$this->options['height']}";
+            } else {
+                return "https://fakeimg.pl/{$this->options['width']}";
+            }
         }
 
         return $src;
     }
     // ----------------------------------------------------------------------------------------------------
     public function build() {
+        $this->options['src'] = $this->src; // Ensure the src is passed to the view
+
+
         return View::make('symlink::components.image', $this->options)->render();
     }
     // ----------------------------------------------------------------------------------------------------
