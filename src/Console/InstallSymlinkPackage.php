@@ -32,8 +32,36 @@ class InstallSymlinkPackage extends Command {
         ]);
 
         $this->removeDefaultRoute();
+        
+        $this->setupViewsFolder($force);
 
         $this->info('Installed Symlink\LaravelHelper');
+    }
+    // ----------------------------------------------------------------------------------------------------
+    protected function setupViewsFolder() {
+        if (!$force) return;
+        $directories = [
+            base_path("resources/views/system"),
+            base_path("resources/views/emails"),
+            base_path("resources/views/guest"),
+            base_path("resources/views/website"),
+        ];
+
+        $viewsPath = resource_path('views');
+        
+        if (File::exists($viewsPath)) {
+            File::deleteDirectory($viewsPath, true);
+            $this->info('Cleared all views from ' . $viewsPath);
+        } else {
+            $this->info('Views folder does not exist.');
+        }
+
+        foreach ($directories as $directory) {
+            if (!file_exists($directory)) {
+                mkdir($directory, 0755, true);
+                $this->info("Created directory: $directory");
+            }
+        }
     }
     // ----------------------------------------------------------------------------------------------------
     protected function removeDefaultRoute() {

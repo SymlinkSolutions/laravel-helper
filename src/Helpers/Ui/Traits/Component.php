@@ -1,10 +1,13 @@
 <?php
 
 namespace Symlink\LaravelHelper\Helpers\Ui\Traits;
-
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Request;
 
 trait Component {
-
+    // ----------------------------------------------------------------------------------------------------
+    //  Functions
+    // ----------------------------------------------------------------------------------------------------
     /**
      * Extracts class list from the options array.
      * 
@@ -26,5 +29,16 @@ trait Component {
         // Return class names as a space-separated string
         return implode(' ', $classList);
     }
+    // ----------------------------------------------------------------------------------------------------
+    public function view($view) {
+        $attr = [
+            "errors" => Request::session()->get('errors'),
+        ];
+
+        if (!$this->options['value']) $this->options['value'] = Request::old($this->name);
+
+        return View::make($view, array_merge($this->options, $attr))->render();
+    }
+    // ----------------------------------------------------------------------------------------------------
 
 }

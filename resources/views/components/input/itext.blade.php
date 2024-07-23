@@ -1,26 +1,17 @@
-@props([
-    'label' => '',
-    'id' => '',
-    'value' => '',
-    'type' => 'text',
-    'error' => false,
-    'errorMessage' => '',
-])
-
 <div class="mt-2 mb-2">
     <div class="form-floating has-validation">
         <input 
-            {{ $attributes->merge(['class' => 'form-control' . ($error ? ' is-invalid' : '')]) }} 
+            class='form-control @if($errors && $errors->has($id)) is-invalid @endif'
             type="{{ $type }}" 
             id="{{ $id }}" 
             name="{{ $id }}" 
             placeholder="{{ $label }}" 
             value="{{ $value }}"
-        >
+        />
         <label for="{{ $id }}">{{ $label }}</label>
-        @if ($error)
+        @if($errors && $errors->has($id))
             <div class="invalid-feedback">
-                {{ $errorMessage }}
+                {{ $errors->first($id) }}
             </div>
         @endif
     </div>
