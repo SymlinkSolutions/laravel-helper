@@ -17,15 +17,23 @@
                             <form action="" method="POST">
                                 @csrf
                                 @method('post')
+                                
                                 {!! Form::itext("first_name", "First Name") !!}
+
                                 {!! Form::itext("last_name", "Last Name") !!}
+
                                 {!! Form::itext("email", "Email") !!}
+
                                 {!! Form::itext("password", "Password", false, [
                                     "hidden" => true
                                 ]) !!}
+
                                 {!! Form::itext("password_confirmation", "Confirm Password", false, [
                                     "hidden" => true
                                 ]) !!}
+
+                                {!! Form::submit("Register") !!}
+
                             </form>
                         </div>
                     </div>

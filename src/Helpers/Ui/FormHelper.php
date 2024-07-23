@@ -9,4 +9,9 @@ class FormHelper {
         return $iText->build();
     }
 
+    public static function submit($label, $options=[]){
+        $submit = new Submit($label, $options);
+        return $submit->build();
+    }
+
 }

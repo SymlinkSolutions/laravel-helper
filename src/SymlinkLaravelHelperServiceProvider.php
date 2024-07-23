@@ -2,7 +2,6 @@
 
 namespace Symlink\LaravelHelper;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Symlink\LaravelHelper\Console\InstallSymlinkPackage;
 use Symlink\LaravelHelper\View\Components\Notification;
