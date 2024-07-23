@@ -2,4 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
-// Route::get()->name("test");
+Route::middleware('web')->group(function(){
+
+
+
+
+
+    
+});

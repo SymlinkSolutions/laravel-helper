@@ -2,6 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get("", function(){
-    return view('symlink::guest.index.home');
-})->name("home");
+Route::middleware('web')->group(function(){
+
+
+    Route::get("", function(){
+        return view('symlink::guest.index.home');
+    })->name("home");
+
+
+
+    
+});

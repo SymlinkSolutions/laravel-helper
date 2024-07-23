@@ -24,10 +24,6 @@
                                     "hidden" => true
                                 ]) !!}
 
-                                {!! Form::itext("password_confirmation", "Confirm Password", false, [
-                                    "hidden" => true
-                                ]) !!}
-
                                 <div class="row">
                                     <div class="col-6">
                                         {!! Form::submit("Login") !!}

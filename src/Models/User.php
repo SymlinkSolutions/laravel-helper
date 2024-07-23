@@ -3,13 +3,18 @@
 namespace Symlink\LaravelHelper\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Symlink\LaravelHelper\Observers\UserObserver;
+use Symlink\LaravelHelper\Traits\HasCustomUuid;
 use Symlink\LaravelHelper\Traits\HasProperties;
 
+#[ObservedBy([UserObserver::class])]
 class User extends Authenticatable {
-    use HasFactory, Notifiable, HasProperties;
+    use HasFactory, Notifiable, HasProperties, HasCustomUuid;
 
     protected $properties_model = UserProperties::class;
 
@@ -20,6 +25,7 @@ class User extends Authenticatable {
      */
     protected $fillable = [
         'name',
+        'uuid',
         'first_name',
         'last_name',
         'id_nr',

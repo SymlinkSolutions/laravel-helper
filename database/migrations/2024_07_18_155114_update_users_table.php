@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('last_name')->nullable();
             $table->string('id_nr')->nullable();
             $table->string('cell_nr')->nullable();
+            $table->uuid("uuid")->nullable();
+            $table->string('name')->nullable()->change();
         });
     }
 
@@ -29,6 +31,7 @@ return new class extends Migration
             $table->dropColumn('last_name');
             $table->dropColumn('id_nr');
             $table->dropColumn('cell_nr');
+            $table->dropColumn("uuid");
         });
     }
 };
