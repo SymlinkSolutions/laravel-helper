@@ -6,9 +6,12 @@ namespace Symlink\LaravelHelper\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Symlink\LaravelHelper\Traits\HasProperties;
 
 class User extends Authenticatable {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasProperties;
+
+    protected $properties_model = UserProperties::class;
 
     /**
      * The attributes that are mass assignable.
@@ -40,8 +43,7 @@ class User extends Authenticatable {
      *
      * @return array<string, string>
      */
-    protected function casts(): array
-    {
+    protected function casts(): array {
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
