@@ -15,6 +15,8 @@
 </head>
 <body>
 
+    <x-symlink::spinner />
+
     {{ $slot }}
 
 

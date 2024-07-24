@@ -1,2 +1,1 @@
-
-console.log('timmy')
+import "./app.js";

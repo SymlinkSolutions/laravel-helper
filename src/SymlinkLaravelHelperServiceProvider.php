@@ -10,6 +10,7 @@ use Symlink\LaravelHelper\Console\ResourceSetup;
 use Symlink\LaravelHelper\View\Components\Image;
 use Symlink\LaravelHelper\View\Components\Layouts\AuthLayout;
 use Symlink\LaravelHelper\View\Components\Layouts\GuestLayout;
+use Symlink\LaravelHelper\View\Components\Spinner;
 
 /**
  * Examples and Guidence from
@@ -117,6 +118,7 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
             'layouts-guest-layout' => GuestLayout::class,
             'layouts-auth-layout' => AuthLayout::class,
             Notification::class,
+            Spinner::class,
         ]);
     }
     // ----------------------------------------------------------------------------------------------------
