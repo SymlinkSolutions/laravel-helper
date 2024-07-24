@@ -1,4 +1,4 @@
-<x-symlink-layouts-guest-layout>
+<x-symlink-layouts-auth-layout>
 
 
     <div class="container-fluid vh-100">
@@ -44,4 +44,4 @@
     </div>
 
 
-</x-symlink-layouts-guest-layout>
+</x-symlink-layouts-auth-layout>

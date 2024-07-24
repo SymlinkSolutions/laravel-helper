@@ -8,6 +8,7 @@ use Symlink\LaravelHelper\View\Components\Notification;
 use Illuminate\Contracts\Http\Kernel;
 use Symlink\LaravelHelper\Console\ResourceSetup;
 use Symlink\LaravelHelper\View\Components\Image;
+use Symlink\LaravelHelper\View\Components\Layouts\AuthLayout;
 use Symlink\LaravelHelper\View\Components\Layouts\GuestLayout;
 
 /**
@@ -114,6 +115,7 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
     protected function loadComponents() {
         $this->loadViewComponentsAs('symlink', [
             'layouts-guest-layout' => GuestLayout::class,
+            'layouts-auth-layout' => AuthLayout::class,
             Notification::class,
         ]);
     }
