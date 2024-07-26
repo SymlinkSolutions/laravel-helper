@@ -34,13 +34,6 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
      */
     public function register() {
         $this->mergeConfigFrom("{$this->root}/config/symlinkLaravelHelper.php", 'laravel-helper');
-        // $this->app->register(EventServiceProvider::class);
-        // $this->app->singleton('Form', function ($app) {
-        //     return new \Symlink\LaravelHelper\Helpers\Ui\FormHelper();
-        // });
-        // $this->app->singleton('Html', function ($app) {
-        //     return new \Symlink\LaravelHelper\Helpers\Ui\HtmlHelper();
-        // });
     }
     // ----------------------------------------------------------------------------------------------------
     /**
@@ -49,13 +42,7 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot(Kernel $kernel) {
-        $this->app->alias("form", \Symlink\LaravelHelper\Facades\Form::class);
-        $this->app->alias("html", \Symlink\LaravelHelper\Facades\Html::class);
-        $loader = AliasLoader::getInstance();
-        $loader->alias('Html', \Symlink\LaravelHelper\Facades\Html::class);
-        $loader->alias('Form', \Symlink\LaravelHelper\Facades\Form::class);
-
-
+        $this->bootAliases();
         $this->loadPublishes();
         $this->loadMigrationsFrom("{$this->root}/database/migrations");
         $this->loadViewsFrom("{$this->root}/resources/views", 'symlink');
@@ -70,6 +57,14 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
     }
     // ----------------------------------------------------------------------------------------------------
     // Other Functions
+    // ----------------------------------------------------------------------------------------------------
+    protected function bootAliases(){
+        $this->app->alias("form", \Symlink\LaravelHelper\Facades\Form::class);
+        $this->app->alias("html", \Symlink\LaravelHelper\Facades\Html::class);
+        $loader = AliasLoader::getInstance();
+        $loader->alias('Html', \Symlink\LaravelHelper\Facades\Html::class);
+        $loader->alias('Form', \Symlink\LaravelHelper\Facades\Form::class);
+    }
     // ----------------------------------------------------------------------------------------------------
     protected function mergeAliases() {
         // Define package aliases
@@ -114,7 +109,7 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
             'layouts-guest-layout' => GuestLayout::class,
             'layouts-auth-layout' => AuthLayout::class,
             Notification::class,
-            'symlink-spinner' => Spinner::class,
+            Spinner::class,
         ]);
     }
     // ----------------------------------------------------------------------------------------------------

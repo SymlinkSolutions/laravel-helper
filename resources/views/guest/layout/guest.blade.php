@@ -15,6 +15,8 @@
 </head>
 <body>
 
+    <x-symlink-spinner />
+
     @include("symlink::guest.includes.navbar")
     {{ $slot }}
 
