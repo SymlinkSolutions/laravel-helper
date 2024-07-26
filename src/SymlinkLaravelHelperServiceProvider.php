@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Symlink\LaravelHelper\Console\InstallSymlinkPackage;
 use Symlink\LaravelHelper\View\Components\Notification;
 use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Foundation\AliasLoader;
 use Symlink\LaravelHelper\Console\ResourceSetup;
 use Symlink\LaravelHelper\View\Components\Image;
 use Symlink\LaravelHelper\View\Components\Layouts\AuthLayout;
@@ -34,12 +35,12 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
     public function register() {
         $this->mergeConfigFrom("{$this->root}/config/symlinkLaravelHelper.php", 'laravel-helper');
         // $this->app->register(EventServiceProvider::class);
-        $this->app->singleton('form', function ($app) {
-            return new \Symlink\LaravelHelper\Helpers\Ui\FormHelper();
-        });
-        $this->app->singleton('html', function ($app) {
-            return new \Symlink\LaravelHelper\Helpers\Ui\HtmlHelper();
-        });
+        // $this->app->singleton('Form', function ($app) {
+        //     return new \Symlink\LaravelHelper\Helpers\Ui\FormHelper();
+        // });
+        // $this->app->singleton('Html', function ($app) {
+        //     return new \Symlink\LaravelHelper\Helpers\Ui\HtmlHelper();
+        // });
     }
     // ----------------------------------------------------------------------------------------------------
     /**
@@ -48,8 +49,12 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot(Kernel $kernel) {
-        // $this->app->alias('form', \Symlink\LaravelHelper\Facades\Form::class);
-        // $this->app->alias('html', \Symlink\LaravelHelper\Facades\Html::class);
+        $this->app->alias("form", \Symlink\LaravelHelper\Facades\Form::class);
+        $this->app->alias("html", \Symlink\LaravelHelper\Facades\Html::class);
+        $loader = AliasLoader::getInstance();
+        $loader->alias('Html', \Symlink\LaravelHelper\Facades\Html::class);
+        $loader->alias('Form', \Symlink\LaravelHelper\Facades\Form::class);
+
 
         $this->loadPublishes();
         $this->loadMigrationsFrom("{$this->root}/database/migrations");
@@ -59,7 +64,7 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
         }
         $this->registerRoutes();
         $this->loadComponents();
-        $this->mergeAliases();
+        // $this->mergeAliases();
 
         // $kernel->pushMiddleware(CapitalizeTitle::class);
     }
@@ -73,22 +78,13 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
             'Html' => \Symlink\LaravelHelper\Facades\Html::class,
         ];
 
-        $configPath = base_path('config/app.php');
+        $aliases = config("app.aliases");
+        $allAiases = array_merge($aliases, $packageAliases);
 
-        // Check if the config file exists
-        if (file_exists($configPath)) {
-            $config = require $configPath;
+        config([
+            "app.aliases" => $allAiases
+        ]);
 
-            // Merge package aliases with existing aliases
-            $existingAliases = $config['aliases'] ?? [];
-            $mergedAliases = array_merge($existingAliases, $packageAliases);
-
-            // Update the config file
-            $config['aliases'] = $mergedAliases;
-
-            // Write the updated config back to the file
-            file_put_contents($configPath, "<?php\n\nreturn " . var_export($config, true) . ";\n");
-        }
     }
     // ----------------------------------------------------------------------------------------------------
     protected function loadCommands() {
@@ -118,7 +114,7 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
             'layouts-guest-layout' => GuestLayout::class,
             'layouts-auth-layout' => AuthLayout::class,
             Notification::class,
-            Spinner::class,
+            'symlink-spinner' => Spinner::class,
         ]);
     }
     // ----------------------------------------------------------------------------------------------------

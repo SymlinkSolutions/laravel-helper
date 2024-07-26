@@ -15,7 +15,10 @@
         "laravel": {
             "providers": [
                 "Symlink\\LaravelHelper\\SymlinkLaravelHelperServiceProvider"
-            ]
+            ],
+            "aliases":{
+                "Html": "Symlink\\LaravelHelper\\Facades\\Html"
+            }
         }
     },
     "minimum-stability": "stable",

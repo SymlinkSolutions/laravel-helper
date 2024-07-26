@@ -34,11 +34,13 @@ class InstallSymlinkPackage extends Command {
         $this->removeDefaultRoute();
         
         $this->setupViewsFolder($force);
+        
+        $this->call('migrate');
 
         $this->info('Installed Symlink\LaravelHelper');
     }
     // ----------------------------------------------------------------------------------------------------
-    protected function setupViewsFolder() {
+    protected function setupViewsFolder($force) {
         if (!$force) return;
         $directories = [
             base_path("resources/views/system"),

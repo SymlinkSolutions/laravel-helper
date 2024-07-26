@@ -15,7 +15,7 @@
 </head>
 <body>
 
-    @include("symlink::guest.includes.navbar");
+    @include("symlink::guest.includes.navbar")
     {{ $slot }}
 
 
