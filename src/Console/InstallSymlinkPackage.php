@@ -26,6 +26,8 @@ class InstallSymlinkPackage extends Command {
             '--force' => $force
         ]);
 
+        $this->call('symlink:setup-icons');
+
         $this->call('vendor:publish', [
             "--force" => $force,
             '--tag' => "symlink-vite"

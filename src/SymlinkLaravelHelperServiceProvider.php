@@ -8,7 +8,7 @@ use Symlink\LaravelHelper\View\Components\Notification;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Foundation\AliasLoader;
 use Symlink\LaravelHelper\Console\ResourceSetup;
-use Symlink\LaravelHelper\View\Components\Image;
+use Symlink\LaravelHelper\Console\SetupIcons;
 use Symlink\LaravelHelper\View\Components\Layouts\AuthLayout;
 use Symlink\LaravelHelper\View\Components\Layouts\GuestLayout;
 use Symlink\LaravelHelper\View\Components\Spinner;
@@ -86,6 +86,7 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
         $this->commands([
             InstallSymlinkPackage::class,
             ResourceSetup::class,
+            SetupIcons::class
         ]);
     }
     // ----------------------------------------------------------------------------------------------------

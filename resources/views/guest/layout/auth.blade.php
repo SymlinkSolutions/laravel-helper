@@ -11,6 +11,9 @@
         'resources/js/guest.js',
     ])
 
+    @foreach ($stylesheets as $stylesheet)
+        <link href="{{ $stylesheet }}" rel="stylesheet">
+    @endforeach
 
 </head>
 <body>
