@@ -65,32 +65,4 @@ class ResourceSetup extends Command {
         }
     }
     // ----------------------------------------------------------------------------------------------------
-    private function createSymbolicLinks() {
-        $filesystem = new Filesystem();
-        
-        $publicCssPath = public_path('css');
-        $publicJsPath = public_path('js');
-        
-        $publishedCssPath = resource_path('css');
-        $publishedJsPath = resource_path('js');
-        
-        try {
-            if (!file_exists($publicCssPath)) {
-                symlink($publishedCssPath, $publicCssPath);
-                $this->info('Created symbolic link for CSS.');
-            } else {
-                $this->info('CSS symbolic link already exists.');
-            }
-
-            if (!file_exists($publicJsPath)) {
-                symlink($publishedJsPath, $publicJsPath);
-                $this->info('Created symbolic link for JS.');
-            } else {
-                $this->info('JS symbolic link already exists.');
-            }
-        } catch (Exception $exception) {
-            $this->error("An error occurred while creating symbolic links: " . $exception->getMessage());
-        }
-    }
-    // ----------------------------------------------------------------------------------------------------
 }

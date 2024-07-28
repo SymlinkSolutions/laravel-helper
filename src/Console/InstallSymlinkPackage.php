@@ -2,6 +2,7 @@
 
 namespace Symlink\LaravelHelper\Console;
 
+use App\Models\Role;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 
@@ -33,13 +34,33 @@ class InstallSymlinkPackage extends Command {
             '--tag' => "symlink-vite"
         ]);
 
+        $this->call('vendor:publish', [
+            "--force" => $force,
+            '--tag' => "symlink-models"
+        ]);
+
         $this->removeDefaultRoute();
         
         $this->setupViewsFolder($force);
+
+        $this->createRolesFolder($force);
         
         $this->call('migrate');
+        
+        Role::syncWithClasslist();
 
         $this->info('Installed Symlink\LaravelHelper');
+    }
+    // ----------------------------------------------------------------------------------------------------
+    protected function createRolesFolder($force) {
+        $path = app_path("Helpers/Roles");
+
+        $this->info("Creating Roles Folder");
+        if (!File::exists($path)){
+            mkdir($path, 0755, true);
+        } else {
+            $this->info("Roles Folder Already Exists!");
+        }
     }
     // ----------------------------------------------------------------------------------------------------
     protected function setupViewsFolder($force) {

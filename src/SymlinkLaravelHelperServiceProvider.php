@@ -103,6 +103,10 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
         $this->publishes([
             "{$this->root}/publishable/vite.config.js" => "vite.config.js",
         ], "symlink-vite");
+
+        $this->publishes([
+            "{$this->root}/publishable/app/Http/Models/" => app_path("Models/"),
+        ], "symlink-models");
     }
     // ----------------------------------------------------------------------------------------------------
     protected function loadComponents() {

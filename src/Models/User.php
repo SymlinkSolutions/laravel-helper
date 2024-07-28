@@ -57,4 +57,8 @@ class User extends Authenticatable {
             'id_nr' => 'hashed',
         ];
     }
+
+    public function roles() {
+        return $this->belongsToMany(Role::class);
+    }
 }
