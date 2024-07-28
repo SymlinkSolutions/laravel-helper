@@ -61,4 +61,20 @@ class User extends Authenticatable {
     public function roles() {
         return $this->belongsToMany(Role::class);
     }
+
+    public function removeRole($class) {
+        if ($this->hasRole($class)){
+            $this->roles()->detach($class->getObj()->id);
+        }
+    }
+
+    public function addRole($class) {
+        if (!$this->hasRole($class)){
+            $this->roles()->attach($class->getObj()->id);
+        }
+    }
+    
+    public function hasRole($class) {
+        return $this->roles()->where('code', $class->getCode())->exists();
+    }
 }

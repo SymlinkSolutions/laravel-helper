@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('role_user', function (Blueprint $table) {
             $table->id();
-            $table->uuid("uuid")->nullable();
-            $table->timestamps();
             $table->foreignId("user_id")->nullable();
             $table->foreignId("role_id")->nullable();
         });
