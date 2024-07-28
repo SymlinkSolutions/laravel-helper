@@ -22,6 +22,7 @@ class Submit implements FormInput {
         $this->options = array_merge([
             "label" => $label,
             "icon" => "bi bi-floppy",
+            "classList" => "btn btn-primary w-100",
         ], $options);
 
     }
