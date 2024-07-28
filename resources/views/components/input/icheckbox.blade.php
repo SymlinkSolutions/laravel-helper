@@ -2,7 +2,7 @@
 
 
 <div class="form-check">
-    <input class="form-check-input @if($errors && $errors->has($id)) is-invalid @endif" type="checkbox" value="{{ $value }}" name="{{ $name }}" id="{{ $name }}">
+    <input class="form-check-input @if($errors && $errors->has($id)) is-invalid @endif" type="checkbox" value="{{ $value ?? '1' }}" name="{{ $name }}" id="{{ $name }}">
     <label class="form-check-label" for="{{ $name }}">
         {{ $label }}
     </label>

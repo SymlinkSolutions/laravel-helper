@@ -6,7 +6,7 @@
             <div class="col-12 col-md-6 col-lg-5">
                 <div class="card">
                     
-                    <div class="row">
+                    <div class="row p-3">
                         <div class="col-5 p-3 d-flex align-items-center justify-content-center">
                             {!! Html::image() !!}
                         </div>

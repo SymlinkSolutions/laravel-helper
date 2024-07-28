@@ -32,6 +32,7 @@ class User extends Authenticatable {
         'cell_nr',
         'email',
         'password',
+        'remember_token',
     ];
 
     /**
