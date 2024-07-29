@@ -7,8 +7,10 @@ use Symlink\LaravelHelper\Console\InstallSymlinkPackage;
 use Symlink\LaravelHelper\View\Components\Notification;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Routing\Router;
 use Symlink\LaravelHelper\Console\ResourceSetup;
 use Symlink\LaravelHelper\Console\SetupIcons;
+use Symlink\LaravelHelper\Http\Middleware\Auth\Role;
 use Symlink\LaravelHelper\View\Components\Layouts\AuthLayout;
 use Symlink\LaravelHelper\View\Components\Layouts\GuestLayout;
 use Symlink\LaravelHelper\View\Components\Spinner;
@@ -41,7 +43,7 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function boot(Kernel $kernel) {
+    public function boot(Kernel $kernel, Router $router) {
         $this->bootAliases();
         $this->loadPublishes();
         $this->loadMigrationsFrom("{$this->root}/database/migrations");
@@ -51,6 +53,8 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
         }
         $this->registerRoutes();
         $this->loadComponents();
+
+        $router->aliasMiddleware("role", Role::class);
         // $this->mergeAliases();
 
         // $kernel->pushMiddleware(CapitalizeTitle::class);

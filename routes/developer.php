@@ -7,7 +7,7 @@ use Symlink\LaravelHelper\Helpers\Roles\Developer;
 
 Route::middleware('web')->group(function(){
 
-    Route::get("test", function(){
+    Route::middleware('role:Developer')->get("test", function(){
         $user = User::where('email', "dylanschutte10@gmail.com")->first();
         
         $user->addRole(new Developer);
