@@ -20,7 +20,7 @@
 
     <x-symlink-spinner />
 
-    {{-- @include('symlink::dev.includes.navbar') --}}
+    @include('symlink::developer.includes.navbar')
     {{ $slot }}
 
 
