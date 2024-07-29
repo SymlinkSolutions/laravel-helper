@@ -15,6 +15,10 @@ Route::middleware('web')->group(function(){
 
 
 
+    Route::get('unauthorized', function(){
+        return view("symlink::guest.index.unauthorized");
+    })->name('unauthorized');
+
 
     
 });

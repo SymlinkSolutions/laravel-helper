@@ -8,7 +8,7 @@ class GuestLayout extends Component {
     // ----------------------------------------------------------------------------------------------------
     //  Properties
     // ----------------------------------------------------------------------------------------------------
-    public $title = "Timmy";
+    public $title = "Somting Went wrong getting the page title!";
     public $theme = "light";
     public $stylesheets = [];
     // ----------------------------------------------------------------------------------------------------
@@ -16,6 +16,7 @@ class GuestLayout extends Component {
     // ----------------------------------------------------------------------------------------------------
     public function __construct() {
         $this->stylesheets = $this->linkedStyleSheets();
+        $this->title = env("APP_NAME");
     }
     // ----------------------------------------------------------------------------------------------------
     public function render() {

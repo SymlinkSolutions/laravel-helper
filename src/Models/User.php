@@ -98,7 +98,6 @@ class User extends Authenticatable {
 
         // Filter out null values (classes that could not be instantiated)
         $classInstances = array_filter($classInstances);
-
         // Check if the user has any of the roles
         foreach ($classInstances as $classInstance) {
             if ($this->roles()->where('code', $classInstance->getCode())->exists()) {

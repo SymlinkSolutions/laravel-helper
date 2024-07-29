@@ -8,7 +8,7 @@ class AuthLayout extends Component {
     // ----------------------------------------------------------------------------------------------------
     //  Properties
     // ----------------------------------------------------------------------------------------------------
-    public $title = "Login";
+    public $title = "SOmting went wrong getting the app title!";
     public $theme = "light";
     public $stylesheets = [];
     // ----------------------------------------------------------------------------------------------------
@@ -16,6 +16,7 @@ class AuthLayout extends Component {
     // ----------------------------------------------------------------------------------------------------
     public function __construct() {
         $this->stylesheets = $this->linkedStyleSheets();
+        $this->title = env("APP_NAME");
     }
     // ----------------------------------------------------------------------------------------------------
     public function render() {

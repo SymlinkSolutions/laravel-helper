@@ -33,9 +33,11 @@
             </ul>
             <div class="d-flex g-2">
                 <div class="me-2">
-                    <button type="button" class="btn btn-outline-danger" href="#">
-                        Dev Tools
-                    </button>
+                    @role('Developer')
+                        <button type="button" class="btn btn-outline-danger" href="#">
+                            Dev Tools
+                        </button>
+                    @endrole
                 </div>
 
                 <div>

@@ -8,6 +8,7 @@ use Symlink\LaravelHelper\View\Components\Notification;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Blade;
 use Symlink\LaravelHelper\Console\ResourceSetup;
 use Symlink\LaravelHelper\Console\SetupIcons;
 use Symlink\LaravelHelper\Http\Middleware\Auth\Role;
@@ -55,6 +56,15 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
         $this->loadComponents();
 
         $router->aliasMiddleware("role", Role::class);
+
+        Blade::if('role', function ($role) {
+            /**
+             * @var App\Models\User
+             */
+            $user = auth()->user();
+            return auth()->check() && $user->hasRole($role);
+        });
+
         // $this->mergeAliases();
 
         // $kernel->pushMiddleware(CapitalizeTitle::class);
