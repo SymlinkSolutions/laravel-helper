@@ -34,9 +34,9 @@
             <div class="d-flex g-2">
                 <div class="me-2">
                     @role('Developer')
-                        <button type="button" class="btn btn-outline-danger" href="#">
+                        <a type="button" class="btn btn-outline-danger" href="{{ route("dev.index") }}">
                             Dev Tools
-                        </button>
+                        </a>
                     @endrole
                 </div>
 

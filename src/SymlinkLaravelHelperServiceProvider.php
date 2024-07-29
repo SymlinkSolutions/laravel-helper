@@ -13,6 +13,7 @@ use Symlink\LaravelHelper\Console\ResourceSetup;
 use Symlink\LaravelHelper\Console\SetupIcons;
 use Symlink\LaravelHelper\Http\Middleware\Auth\Role;
 use Symlink\LaravelHelper\View\Components\Layouts\AuthLayout;
+use Symlink\LaravelHelper\View\Components\Layouts\DevLayout;
 use Symlink\LaravelHelper\View\Components\Layouts\GuestLayout;
 use Symlink\LaravelHelper\View\Components\Spinner;
 
@@ -127,6 +128,7 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
         $this->loadViewComponentsAs('symlink', [
             'layouts-guest-layout' => GuestLayout::class,
             'layouts-auth-layout' => AuthLayout::class,
+            'layouts-dev-layout' => DevLayout::class,
             Notification::class,
             Spinner::class,
         ]);

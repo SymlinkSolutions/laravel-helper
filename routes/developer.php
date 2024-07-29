@@ -4,17 +4,11 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Symlink\LaravelHelper\Helpers\Roles\Developer;
+use Symlink\LaravelHelper\Http\Controllers\Developer\Index\HomeController;
 
-Route::middleware('web')->group(function(){
+Route::middleware(['web', "role:Developer"])->prefix("dev")->name('dev.')->group(function(){
 
-    Route::middleware('role:Developer')->get("test", function(){
-        $user = User::where('email', "dylanschutte10@gmail.com")->first();
-        
-
-        return view('symlink::guest.index.home');
-    });
+    Route::get("", [HomeController::class, "showHome"])->name("index");
 
 
-
-    
 });

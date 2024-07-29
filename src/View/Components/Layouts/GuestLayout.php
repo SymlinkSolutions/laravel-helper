@@ -25,7 +25,6 @@ class GuestLayout extends Component {
     // ----------------------------------------------------------------------------------------------------
     public function linkedStyleSheets() {
         return [
-            asset("fonts/bootstrap-icons/bootstrap-icons.css")
         ];
     }
     // ----------------------------------------------------------------------------------------------------

@@ -4,11 +4,11 @@ namespace Symlink\LaravelHelper\View\Components\Layouts;
 
 use Illuminate\View\Component;
 
-class AuthLayout extends Component {
+class DevLayout extends Component {
     // ----------------------------------------------------------------------------------------------------
     //  Properties
     // ----------------------------------------------------------------------------------------------------
-    public $title = "SOmting went wrong getting the app title!";
+    public $title = "Somting Went wrong getting the page title!";
     public $theme = "light";
     public $stylesheets = [];
     // ----------------------------------------------------------------------------------------------------
@@ -16,11 +16,11 @@ class AuthLayout extends Component {
     // ----------------------------------------------------------------------------------------------------
     public function __construct() {
         $this->stylesheets = $this->linkedStyleSheets();
-        $this->title = env("APP_NAME");
+        $this->title = env("APP_NAME") . " | Dev Tools";
     }
     // ----------------------------------------------------------------------------------------------------
     public function render() {
-        return view('symlink::guest.layout.auth');
+        return view('symlink::developer.layout.dev');
     }
     // ----------------------------------------------------------------------------------------------------
     public function linkedStyleSheets() {

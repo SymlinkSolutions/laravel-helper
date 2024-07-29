@@ -9,6 +9,7 @@
 
     @vite(['resources/sass/guest.scss', 'resources/js/guest.js'])
 
+    <link href="{{ asset("fonts/bootstrap-icons/bootstrap-icons.css") }}" rel="stylesheet">
     @foreach ($stylesheets as $stylesheet)
         <link href="{{ $stylesheet }}" rel="stylesheet">
     @endforeach
