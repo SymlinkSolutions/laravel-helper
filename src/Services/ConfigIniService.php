@@ -25,13 +25,24 @@ class ConfigIniService {
     // ---------------------------------------------------------------------------------------
     public function update($key, $value) {
         $config = $this->read();
+        if (str_contains($value, "\"")){
+            $value = base64_encode($value);
+        }
         $config[$this->section][$key] = $value;
         return $this->write($config);
     }
     // ---------------------------------------------------------------------------------------
     public function get($key) {
         $config = $this->read();
-        return $config[$this->section][$key] ?? false;
+        $value = $config[$this->section][$key] ?? false;
+        if ($value){
+            try {
+                return base64_decode($value);
+            }catch(\Exception $e){
+                return $value;
+            }
+        }
+        return false;
     }
     // ---------------------------------------------------------------------------------------
     public function delete($key) {
