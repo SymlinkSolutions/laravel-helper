@@ -138,6 +138,7 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
         $this->loadRoutesFrom("{$this->root}/routes/developer.php");
         $this->loadRoutesFrom("{$this->root}/routes/auth.php");
         $this->loadRoutesFrom("{$this->root}/routes/guest.php");
+        $this->loadRoutesFrom("{$this->root}/routes/dropzone.php");
     }
     // ----------------------------------------------------------------------------------------------------
 }

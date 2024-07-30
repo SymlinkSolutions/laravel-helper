@@ -4,7 +4,9 @@
     "type": "library",
     "require": {
         "twbs/bootstrap": "^5.3",
-        "twbs/bootstrap-icons": "^1.11"
+        "twbs/bootstrap-icons": "^1.11",
+        "components/jquery": "^3.7",
+        "enyo/dropzone": "^5.9.3"
     },
     "autoload": {
         "psr-4": {

@@ -4,6 +4,7 @@ namespace Symlink\LaravelHelper\Facades;
 
 use Illuminate\Support\Facades\Facade;
 use Symlink\LaravelHelper\Helpers\Ui\iCheckbox;
+use Symlink\LaravelHelper\Helpers\Ui\iDropzone;
 use Symlink\LaravelHelper\Helpers\Ui\iSelect;
 use Symlink\LaravelHelper\Helpers\Ui\iText;
 use Symlink\LaravelHelper\Helpers\Ui\Submit;
@@ -34,6 +35,11 @@ class Form extends Facade {
     public static function submit($label, $options=[]){
         $submit = new Submit($label, $options);
         return $submit->build();
+    }
+    //------------------------------------------------------------------------------
+    public static function idropzone($options=[]){
+        $iDropzone = new iDropzone($options);
+        return $iDropzone->build();
     }
     //------------------------------------------------------------------------------
 }
