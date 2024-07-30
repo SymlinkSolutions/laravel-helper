@@ -6,7 +6,8 @@
         "twbs/bootstrap": "^5.3",
         "twbs/bootstrap-icons": "^1.11",
         "components/jquery": "^3.7",
-        "enyo/dropzone": "^5.9.3"
+        "enyo/dropzone": "^5.9.3",
+        "jackiedo/dotenv-editor": "^1.1"
     },
     "autoload": {
         "psr-4": {
