@@ -7,6 +7,7 @@ use Symlink\LaravelHelper\Helpers\Ui\iCheckbox;
 use Symlink\LaravelHelper\Helpers\Ui\iDropzone;
 use Symlink\LaravelHelper\Helpers\Ui\iSelect;
 use Symlink\LaravelHelper\Helpers\Ui\iText;
+use Symlink\LaravelHelper\Helpers\Ui\iTextArea;
 use Symlink\LaravelHelper\Helpers\Ui\Submit;
 
 class Form extends Facade {
@@ -20,6 +21,11 @@ class Form extends Facade {
     public static function itext($name, $label, $value='', $options=[]){
         $iText = new iText($name, $label, $value, $options);
         return $iText->build();
+    }
+    //------------------------------------------------------------------------------
+    public static function itextarea($name, $label, $value='', $options=[]){
+        $iTextArea = new iTextArea($name, $label, $value, $options);
+        return $iTextArea->build();
     }
     //------------------------------------------------------------------------------
     public static function iselect($name, $label, $data = [], $value = false, $options = []){

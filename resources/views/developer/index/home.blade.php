@@ -17,7 +17,8 @@
                 <div class="col-4">
 
                     {!! Form::itext("app_name", "App Name", $app_name) !!}
-                    {!! Form::itext("font_primary", "Font Primary", $font_primary) !!}
+                    {!! Form::itextarea("font_primary", "Font Primary", $font_primary) !!}
+                    {!! Form::itextarea("font_secondary", "Font Secondary", $font_secondary) !!}
 
                 </div>
             </div>

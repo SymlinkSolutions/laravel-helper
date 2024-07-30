@@ -11,7 +11,11 @@
 
     <link href="{{ asset("fonts/bootstrap-icons/bootstrap-icons.css") }}" rel="stylesheet">
     @foreach ($stylesheets as $stylesheet)
-        <link href="{{ $stylesheet }}" rel="stylesheet">
+        @if (str_contains( $stylesheet, "href"))
+            {!! $stylesheet !!}
+        @else
+            <link href="{{ $stylesheet }}" rel="stylesheet">
+        @endif
     @endforeach
 
 </head>
