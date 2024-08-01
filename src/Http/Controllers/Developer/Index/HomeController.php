@@ -31,11 +31,21 @@ class HomeController extends Controller {
         $sass = new Sass();
         $ini = new ConfigIniService();
 
-        $sass->add([
-            ".font-primary" => [
-                "font-family" => "'{$ini->get("primary_font_family")}' !important",
-            ]
-        ]);
+        if($font_primary = $ini->get("primary_font_family")) {
+            $sass->add([
+                ".font-primary" => [
+                    "font-family" => "'{$font_primary}'",
+                ],
+            ]);
+        }
+
+        if ($font_secondary = $ini->get("secondary_font_family")) {
+            $sass->add([
+                ".font-secondary" => [
+                    "font-family" => "'{$font_secondary}'",
+                ],
+            ]);
+        }
 
         $sass->writeTofile($sass_file);
         
@@ -54,6 +64,8 @@ class HomeController extends Controller {
         $ini->update("font_secondary", $request->font_secondary);
         $ini->update("primary_font_family", $request->primary_font_family);
         $ini->update("secondary_font_family", $request->secondary_font_family);
+
+        $this->updateStyles();
 
         return redirect()->back()->with(['message' => "Changes Saved"]);
     }
