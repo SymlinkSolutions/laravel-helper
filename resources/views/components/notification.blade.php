@@ -1,5 +1,5 @@
 @if ($message)
-    <div class="alert alert-primary fade show custom-alert" role="alert" id="{{ $id }}">
+    <div class="alert alert-{{ $color }} fade show custom-alert" role="alert" id="{{ $id }}">
         <span>{{ $message }}</span>
         <div class="progress-bar" id="progress-{{ $id }}"></div>
     </div>
@@ -46,7 +46,7 @@
     bottom: 0;
     left: 0;
     height: 5px;
-    background-color: #007bff; /* Progress bar color */
+    background-color: #585858; /* Progress bar color */
     width: 100%;
     transform: scaleX(-1); /* Flip the progress bar horizontally */
 }

@@ -10,6 +10,7 @@ class Notification extends Component {
     //  Properties
     // ----------------------------------------------------------------------------------------------------
     public $message;
+    public $color;
     public $id;
     // ----------------------------------------------------------------------------------------------------
     //  Functions
@@ -21,6 +22,7 @@ class Notification extends Component {
     // ----------------------------------------------------------------------------------------------------
     public function render() {
         $this->message = session('message');
+        $this->color = session('color') ?? "info";
         return view('symlink::components.notification');
     }
     // ----------------------------------------------------------------------------------------------------

@@ -4,6 +4,7 @@ namespace Symlink\LaravelHelper\Http\Controllers\Developer\Index;
 
 use Symlink\LaravelHelper\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Jackiedo\DotenvEditor\Facades\DotenvEditor;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
@@ -30,6 +31,13 @@ class HomeController extends Controller {
         $sass_file = resource_path("/sass/generated/generatedBySymlink.scss");
         $sass = new Sass();
         $ini = new ConfigIniService();
+        
+        if (config("app.env") != "local"){
+            return redirect()->route('dev.index')->with([
+                'message' => "Can only opdate in a local environment!",
+                "color" => "warning",
+            ]); 
+        }
 
         if($font_primary = $ini->get("primary_font_family")) {
             $sass->add([
@@ -50,7 +58,9 @@ class HomeController extends Controller {
         $sass->writeTofile($sass_file);
         
 
-        return redirect()->route('dev.index')->with(['message' => "Styles updated!"]);
+        return redirect()->route('dev.index')->with([
+            'message' => "Styles updated!",
+        ]);
 
     }
     // --------------------------------------------------------------------------------------------
