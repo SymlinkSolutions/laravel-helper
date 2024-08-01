@@ -2,11 +2,14 @@
 
 namespace Symlink\LaravelHelper\Support\Sass;
 
+use Symlink\LaravelHelper\Services\ConfigIniService;
+
 class Sass {
     // ---------------------------------------------------------------
     // Properties
     // ---------------------------------------------------------------
     protected $properties = []; 
+    protected $string_properties = []; 
     protected $options = []; // Initialize as an empty array
     // ---------------------------------------------------------------
     // Functions
@@ -21,7 +24,20 @@ class Sass {
         $this->options['file'] = $file;
     }
     // ---------------------------------------------------------------
-    public function add($property) {
+    public function add($mixed) {
+        if (is_array($mixed))
+            $this->add_array($mixed);
+
+        if (is_string($mixed)) 
+            $this->add_string($mixed);
+        
+    }
+    // ---------------------------------------------------------------
+    public function add_string($string) {
+        $this->string_properties[] = $string;
+    }
+    // ---------------------------------------------------------------
+    public function add_array($property) {
         if (!is_array($property)) {
             return;
         }
@@ -62,24 +78,53 @@ class Sass {
     }
     // ---------------------------------------------------------------
     public function build(){
-        return $this->arrayToScss($this->properties);
+        $complete_string = $this->arrayToScss($this->string_properties);
+        return $complete_string ."\n". $this->arrayToScss($this->properties);
     }
     
+    // ---------------------------------------------------------------
+    public function write_bootstrap_theme_colors() {
+        $file = resource_path("sass/generated/bootstrap_theme_colors.scss");
+        $ini = new ConfigIniService();
+
+        $colors = [
+            "primary" => $ini->get('bs_primary'),
+            "secondary" => $ini->get('bs_secondary'),
+            "success" => $ini->get('bs_success'),
+            "info" => $ini->get('bs_info'),
+            "warning" => $ini->get('bs_warning'),
+            "danger" => $ini->get('bs_danger'),
+            "light" => $ini->get('bs_light'),
+            "dark" => $ini->get('bs_dark'),
+        ];
+        $replace_string = "";
+        foreach ($colors as $color => $value){
+            if (!$value) continue;
+            $replace_string = <<<EOD
+            \${$color}: {$value} !default;
+            EOD;
+        }
+        $this->add($replace_string);
+        
+        $this->writeTofile($file);
+    }
     // ---------------------------------------------------------------
     protected function arrayToScss($array, $indent = 0) {
         $scss = '';
         $indentation = str_repeat('    ', $indent);
-    
-        foreach ($array as $selector => $properties) {
-            if (is_array($properties)) {
-                $scss .= "{$indentation}{$selector} {\n";
-                $scss .= $this->arrayToScss($properties, $indent + 1);
+
+        foreach ($array as $key => $item) {
+            if (is_array($item)) {
+                // Handle nested arrays
+                $scss .= "{$indentation}{$key} {\n";
+                $scss .= $this->arrayToScss($item, $indent + 1);
                 $scss .= "{$indentation}}\n";
-            } else {
-                $scss .= "{$indentation}{$selector}: {$properties};\n";
+            } elseif (is_string($item)) {
+                // Handle strings (complete SCSS)
+                $scss .= "{$indentation}{$item}\n";
             }
         }
-    
+
         return $scss;
     }
     // ---------------------------------------------------------------
