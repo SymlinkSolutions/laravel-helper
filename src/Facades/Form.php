@@ -4,6 +4,7 @@ namespace Symlink\LaravelHelper\Facades;
 
 use Illuminate\Support\Facades\Facade;
 use Symlink\LaravelHelper\Helpers\Ui\iCheckbox;
+use Symlink\LaravelHelper\Helpers\Ui\iColorPicker;
 use Symlink\LaravelHelper\Helpers\Ui\iDropzone;
 use Symlink\LaravelHelper\Helpers\Ui\iSelect;
 use Symlink\LaravelHelper\Helpers\Ui\iText;
@@ -31,6 +32,11 @@ class Form extends Facade {
     public static function iselect($name, $label, $data = [], $value = false, $options = []){
         $iSelect = new iSelect($name, $label, $data, $value, $options = []);
         return $iSelect->build();
+    }
+    //------------------------------------------------------------------------------
+    public static function icolorpicker($name, $label, $value='', $options=[]){
+        $iColorPicker = new iColorPicker($name, $label, $value, $options);
+        return $iColorPicker->build();
     }
     //------------------------------------------------------------------------------
     public static function icheckbox($name, $label, $value = false, $options = []){
