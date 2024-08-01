@@ -18,6 +18,7 @@
 
 <body>
 
+    <x-symlink-notification />
     <x-symlink-spinner />
 
     @include('symlink::developer.includes.navbar')

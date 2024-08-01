@@ -35,7 +35,7 @@ trait Component {
             "errors" => Request::session()->get('errors'),
         ];
 
-        if (!$this->options['value']) $this->options['value'] = Request::old($this->name);
+        if (isset($this->options['value']) && !$this->options['value']) $this->options['value'] = Request::old($this->name);
 
         return View::make($view, array_merge($this->options, $attr))->render();
     }

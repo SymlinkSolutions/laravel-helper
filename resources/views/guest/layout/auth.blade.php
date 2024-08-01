@@ -17,8 +17,8 @@
     @endforeach
 
 </head>
-<body>
-
+<body class="font-primary">
+    <x-symlink-notification />
     <x-symlink-spinner />
 
     {{ $slot }}

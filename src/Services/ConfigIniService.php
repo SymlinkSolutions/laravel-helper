@@ -2,6 +2,10 @@
 
 namespace Symlink\LaravelHelper\Services;
 
+use Illuminate\Support\Facades\Log;
+use Symfony\Component\Console\Helper\Helper;
+use Symlink\LaravelHelper\Support\String\Str;
+
 class ConfigIniService {
     // ---------------------------------------------------------------------------------------
     // Properties
@@ -26,21 +30,20 @@ class ConfigIniService {
     public function update($key, $value) {
         $config = $this->read();
         if (str_contains($value, "\"")){
-            $value = base64_encode($value);
+            $value = Str::toBase64($value);
         }
         $config[$this->section][$key] = $value;
         return $this->write($config);
     }
     // ---------------------------------------------------------------------------------------
     public function get($key) {
+
         $config = $this->read();
         $value = $config[$this->section][$key] ?? false;
-        if ($value){
-            try {
-                return base64_decode($value);
-            }catch(\Exception $e){
-                return $value;
-            }
+        if ($value && Str::isBase64Encoded($value)){
+            return Str::fromBase64($value);
+        } else if ($value) {
+            return $value;
         }
         return false;
     }

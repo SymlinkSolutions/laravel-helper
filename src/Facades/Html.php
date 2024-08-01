@@ -3,15 +3,14 @@
 namespace Symlink\LaravelHelper\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use Symlink\LaravelHelper\Helpers\Ui\Button;
 use Symlink\LaravelHelper\Helpers\Ui\Image;
 
-class Html extends Facade
-{
-    protected static function getFacadeAccessor()
-    {
+class Html extends Facade {
+    protected static function getFacadeAccessor() {
         return 'html';
     }
-
+    // -----------------------------------------------------------------------------------
     /**
      * Generate an HTML image element.
      *
@@ -23,4 +22,11 @@ class Html extends Facade
         $iText = new Image($src, $options);
         return $iText->build();
     }
+    // -----------------------------------------------------------------------------------
+    public static function button($label, $href = "#", $options = []) {
+        $button = new Button($label, $href, $options);
+        return $button->build();
+        
+    }
+    // -----------------------------------------------------------------------------------
 }
