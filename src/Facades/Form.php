@@ -49,8 +49,8 @@ class Form extends Facade {
         return $submit->build();
     }
     //------------------------------------------------------------------------------
-    public static function idropzone($options=[]){
-        $iDropzone = new iDropzone($options);
+    public static function idropzone($name, $options=[]){
+        $iDropzone = new iDropzone($name, $options);
         return $iDropzone->build();
     }
     //------------------------------------------------------------------------------

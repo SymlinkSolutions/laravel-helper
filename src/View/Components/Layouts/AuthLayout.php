@@ -3,6 +3,7 @@
 namespace Symlink\LaravelHelper\View\Components\Layouts;
 
 use Illuminate\View\Component;
+use Symlink\LaravelHelper\Services\ConfigIniService;
 
 class AuthLayout extends Component {
     // ----------------------------------------------------------------------------------------------------
@@ -24,7 +25,9 @@ class AuthLayout extends Component {
     }
     // ----------------------------------------------------------------------------------------------------
     public function linkedStyleSheets() {
+        $ini = new ConfigIniService();
         return [
+            $ini->get('font_primary'),
         ];
     }
     // ----------------------------------------------------------------------------------------------------

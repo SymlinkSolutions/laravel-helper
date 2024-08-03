@@ -7,6 +7,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route("dev.index") }}">General Settings</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route("dev.assets") }}">Assets</a>
+                </li>
                 {{-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">Dropdown</a>

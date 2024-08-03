@@ -74,9 +74,25 @@
                             </div>
                             <hr>
                             <div class="row">
-                                {!! Form::itext('primary_font_family', 'Primary Font Family', $primary_font_family) !!}
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            {!! Form::itext('primary_font_family', 'Primary Font Family', $primary_font_family) !!}
+                                        </div>
+                                        <div class="col-6">
+                                            {!! Form::itext('primary_font_family_backup', 'Primary Font Family Backup', $primary_font_family_backup) !!}
+                                        </div>
+                                    </div>
+                                </div>
                                 {!! Form::itextarea('font_primary', 'Font Primary', $font_primary) !!}
-                                {!! Form::itext('secondary_font_family', 'Secondary Font Family', $secondary_font_family) !!}
+                                <div class="row">
+                                    <div class="col-6">
+                                        {!! Form::itext('secondary_font_family', 'Secondary Font Family', $secondary_font_family) !!}
+                                    </div>
+                                    <div class="col-6">
+                                        {!! Form::itext('secondary_font_family_backup', 'Secondary Font Family Backup', $secondary_font_family_backup) !!}
+                                    </div>
+                                </div>
                                 {!! Form::itextarea('font_secondary', 'Font Secondary', $font_secondary) !!}
                             </div>
                         </div>

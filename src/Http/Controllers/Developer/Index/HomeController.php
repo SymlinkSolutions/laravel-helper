@@ -19,7 +19,9 @@ class HomeController extends Controller {
             "font_primary" => $ini->get('font_primary'),
             "font_secondary" => $ini->get('font_secondary'),
             "primary_font_family" => $ini->get('primary_font_family'),
+            "primary_font_family_backup" => $ini->get('primary_font_family_backup'),
             "secondary_font_family" => $ini->get('secondary_font_family'),
+            "secondary_font_family_backup" => $ini->get('secondary_font_family_backup'),
 
             "bs_primary" => $ini->get('bs_primary'),
             "bs_secondary" => $ini->get('bs_secondary'),
@@ -31,6 +33,10 @@ class HomeController extends Controller {
             "bs_dark" => $ini->get('bs_dark'),
         ]);
 
+    }
+    // --------------------------------------------------------------------------------------------
+    public function showAssets() {
+        return view("symlink::developer.index.assets");
     }
     // --------------------------------------------------------------------------------------------
     public function updateStyles(){
@@ -50,7 +56,7 @@ class HomeController extends Controller {
         if($font_primary = $ini->get("primary_font_family")) {
             $sass->add([
                 ".font-primary" => [
-                    "font-family" => "'{$font_primary}'",
+                    "font-family" => "'{$font_primary}', '{$ini->get("primary_font_family_backup")}'",
                 ],
             ]);
         }
@@ -58,7 +64,7 @@ class HomeController extends Controller {
         if ($font_secondary = $ini->get("secondary_font_family")) {
             $sass->add([
                 ".font-secondary" => [
-                    "font-family" => "'{$font_secondary}'",
+                    "font-family" => "'{$font_secondary}', '{$ini->get("secondary_font_family_backup")}'",
                 ],
             ]);
         }
@@ -104,8 +110,10 @@ class HomeController extends Controller {
         $ini = new ConfigIniService();
         $ini->update("font_primary", $request->font_primary);
         $ini->update("font_secondary", $request->font_secondary);
+        $ini->update("primary_font_family_backup", $request->primary_font_family_backup);
         $ini->update("primary_font_family", $request->primary_font_family);
         $ini->update("secondary_font_family", $request->secondary_font_family);
+        $ini->update("secondary_font_family_backup", $request->secondary_font_family_backup);
 
         $ini->update("bs_primary", $request->bs_primary);
         $ini->update("bs_secondary", $request->bs_secondary);
