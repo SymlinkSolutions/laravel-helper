@@ -119,8 +119,11 @@ class Sass {
                 $scss .= "{$indentation}{$key} {\n";
                 $scss .= $this->arrayToScss($item, $indent + 1);
                 $scss .= "{$indentation}}\n";
+            } elseif (is_string($key) && !is_array($item)) {
+                // Handle array of strings as SCSS variables
+                $scss .= "{$indentation}{$key}: {$item};\n";
             } elseif (is_string($item)) {
-                // Handle strings (complete SCSS)
+                // Handle standalone SCSS strings
                 $scss .= "{$indentation}{$item}\n";
             }
         }
