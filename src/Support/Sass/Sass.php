@@ -83,7 +83,7 @@ class Sass {
     }
     
     // ---------------------------------------------------------------
-    public function write_bootstrap_theme_colors() {
+    public function write_bootstrap_theme_colors($default = false) {
         $file = resource_path("sass/generated/bootstrap_theme_colors.scss");
         $ini = new ConfigIniService();
 
@@ -100,8 +100,8 @@ class Sass {
         $replace_string = "";
         foreach ($colors as $color => $value){
             if (!$value) continue;
-            $replace_string = <<<EOD
-            \${$color}: {$value} !default;
+            $replace_string .= <<<EOD
+            \${$color}: {$value}; \n
             EOD;
         }
         $this->add($replace_string);
