@@ -16,6 +16,7 @@ class HomeController extends Controller {
 
         return view('symlink::developer.index.home', [
             "app_name" => env("APP_NAME"),
+            "app_url" => env("APP_URL"),
             "font_primary" => $ini->get('font_primary'),
             "font_secondary" => $ini->get('font_secondary'),
             "primary_font_family" => $ini->get('primary_font_family'),
@@ -41,6 +42,7 @@ class HomeController extends Controller {
     // --------------------------------------------------------------------------------------------
     public function updateStyles(){
         
+
         $sass_file = resource_path("/sass/generated/generatedBySymlink.scss");
         $sass = new Sass();
         $ini = new ConfigIniService();
@@ -105,6 +107,7 @@ class HomeController extends Controller {
     public function storeGeneralSettings(Request $request) {
         $env = new DotEnv();
         $env->update("APP_NAME", $request->app_name);
+        $env->update("APP_URL", $request->app_url);
         $env->save();
 
         $ini = new ConfigIniService();

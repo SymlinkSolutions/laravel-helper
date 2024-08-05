@@ -8,6 +8,8 @@
             <div class="row">
                 <p class="fs-3">General Settings</p>
             </div>
+
+            @if (Illuminate\Support\Facades\App::isLocal())
             <div class="row mb-3">
                 <div class="col-auto">
                     {!! Form::submit('Save Changes') !!}
@@ -18,6 +20,7 @@
                     ]) !!}
                 </div>
             </div>
+            @endif
 
             <div class="row">
                 <div class="col-4">
@@ -31,6 +34,7 @@
                             <hr>
                             <div class="row">
                                 {!! Form::itext('app_name', 'App Name', $app_name) !!}
+                                {!! Form::itext('app_url', 'App Url', $app_url) !!}
                             </div>
                         </div>
                     </div>
@@ -43,11 +47,13 @@
                                 <div class="col">
                                     <h4 class="card-title">Bootstrap Colors</h4>
                                 </div>
+                                @if (Illuminate\Support\Facades\App::isLocal())
                                 <div class="col-auto">
                                     {!! Html::button('Reset Colors', route('dev.reset.colors'), [
                                         '.btn-danger' => true,
                                     ]) !!}
                                 </div>
+                                @endif
                             </div>
                             <hr>
                             <div class="row">
