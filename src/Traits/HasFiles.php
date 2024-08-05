@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Symlink\LaravelHelper\Support\String\Str;
 
 trait HasFiles {
     // ------------------------------------------------------------------------------------------
@@ -52,6 +53,22 @@ trait HasFiles {
         $file_item = $this->files()->save($new_file_item);
 
         Storage::disk($disk)->putFileAs($file_item->path, $path, $file_item->file_name);
+    }
+    // ------------------------------------------------------------------------------------------
+    public function getFiles($group = "default", $options = []){
+        $options = array_merge([
+            
+        ], $options);
+        $file_items = $this->files()->where('group', $group)->get();
+        return $file_items;
+    }
+    // ------------------------------------------------------------------------------------------
+    public function getFileStreamUrl($mixed, $options = []){
+        $options = array_merge([
+            
+        ], $options);
+        $baseUrl = config("app.url");
+        return "{$baseUrl}/stream/{$mixed}";
     }
     // ------------------------------------------------------------------------------------------
 }
