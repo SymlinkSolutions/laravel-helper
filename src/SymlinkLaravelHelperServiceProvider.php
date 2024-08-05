@@ -9,8 +9,10 @@ use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
+use Symlink\LaravelHelper\Console\CreateDeveloper;
 use Symlink\LaravelHelper\Console\ResourceSetup;
 use Symlink\LaravelHelper\Console\SetupIcons;
+use Symlink\LaravelHelper\Console\SetupIis;
 use Symlink\LaravelHelper\Http\Middleware\Auth\Role;
 use Symlink\LaravelHelper\View\Components\Layouts\AuthLayout;
 use Symlink\LaravelHelper\View\Components\Layouts\DevLayout;
@@ -101,7 +103,9 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
         $this->commands([
             InstallSymlinkPackage::class,
             ResourceSetup::class,
-            SetupIcons::class
+            SetupIcons::class,
+            SetupIis::class,
+            CreateDeveloper::class,
         ]);
     }
     // ----------------------------------------------------------------------------------------------------
@@ -122,6 +126,10 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
         $this->publishes([
             "{$this->root}/publishable/app/Http/Models/" => app_path("Models/"),
         ], "symlink-models");
+
+        $this->publishes([
+            "{$this->root}/publishable/public/web.config" => public_path("web.config"),
+        ], "symlink-iis");
     }
     // ----------------------------------------------------------------------------------------------------
     protected function loadComponents() {
