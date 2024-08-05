@@ -20,6 +20,10 @@ return new class extends Migration
             $table->string("file_size")->nullable();
             $table->string("user_id")->nullable();
             $table->morphs("model");
+            $table->string("group")->default("default")->nullable();
+            $table->string('disk')->default('local')->nullable();
+            $table->string('mime_type')->nullable();
+            $table->string('path')->nullable();
         });
     }
 
@@ -28,10 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('file_items', function (Blueprint $table) {
-            $table->dropForeign(['file_data_id']);
-            $table->dropColumn('file_data_id');
-        });
         Schema::dropIfExists('file_items');
     }
 };
