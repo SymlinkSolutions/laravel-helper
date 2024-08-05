@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('disk')->default('local')->nullable();
             $table->string('mime_type')->nullable();
             $table->string('path')->nullable();
+            $table->uuid('uuid')->nullable();
         });
     }
 

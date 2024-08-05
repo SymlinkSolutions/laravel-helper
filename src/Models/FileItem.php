@@ -4,9 +4,10 @@ namespace Symlink\LaravelHelper\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Symlink\LaravelHelper\Traits\HasCustomUuid;
 
 class FileItem extends Model {
-    use HasFactory;
+    use HasFactory, HasCustomUuid;
 
     protected $fillable = [
         "file_data_id",
@@ -14,6 +15,12 @@ class FileItem extends Model {
         "file_extension",
         "file_size",
         "user_id",
+        "model_type",
+        "model_id",
+        "group",
+        "disk",
+        "mime_type",
+        "path",
     ];
 
     public function file_item() {
@@ -23,4 +30,5 @@ class FileItem extends Model {
     public function model() {
         return $this->morphTo();
     }
+
 }
