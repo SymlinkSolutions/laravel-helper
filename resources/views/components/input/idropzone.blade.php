@@ -1,6 +1,6 @@
 
 <div class="dropzone" id="{{ $id }}"></div>
-
+<input type="hidden" id="{{ $id }}_path" value="{{ $path }}">
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -45,7 +45,8 @@
                             'X-CSRF-TOKEN': '{{ $csrf_token }}'
                         },
                         data: {
-                            filename: file.name
+                            filename: file.name,
+                            path: '{{ $path }}'
                         },
                         success: function(response) {
                             console.log('File deleted successfully');
@@ -54,6 +55,9 @@
                             console.error('Error deleting file:', error);
                         }
                     });
+                });
+                this.on("sending", function(file, xhr, formData) {
+                    formData.append('path', '{{ $path }}')
                 });
             }
         });

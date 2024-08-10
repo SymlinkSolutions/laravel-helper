@@ -1,20 +1,15 @@
 <x-symlink-layouts-dev-layout>
 
-    <form action="" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('dev.assets.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method("post")
         <div class="container-fluid">
             <div class="row">
-                <p class="fs-3">General Settings</p>
+                <p class="fs-3">Project Assets</p>
             </div>
             <div class="row mb-3">
                 <div class="col-auto">
                     {!! Form::submit('Save Changes') !!}
-                </div>
-                <div class="col-auto">
-                    {!! Html::button('Update Styles', route('dev.update.styles'), [
-                        '.btn-warning' => true,
-                    ]) !!}
                 </div>
             </div>
 
@@ -35,7 +30,14 @@
                                     
                                 </div>
                                 <div class="col-12">
-                                    {!! Form::idropzone('asset_logo') !!}
+                                    <div class="row">
+                                        <div class="col-6">
+                                            {!! Html::image("assets.logo") !!}
+                                        </div>
+                                        <div class="col-6">
+                                            {!! Form::idropzone('asset_logo', "/asset/logo") !!}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

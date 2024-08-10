@@ -4,6 +4,7 @@ namespace Symlink\LaravelHelper\Http\Controllers\Developer\Index;
 
 use Symlink\LaravelHelper\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Symlink\LaravelHelper\Helpers\Dropzone\DropzoneHelper;
 use Symlink\LaravelHelper\Services\ConfigIniService;
 use Symlink\LaravelHelper\Support\DotEnv\DotEnv;
 use Symlink\LaravelHelper\Support\Sass\Sass;
@@ -102,6 +103,22 @@ class HomeController extends Controller {
         $this->updateStyles();
 
         return redirect()->back()->with(['message' => "Colors Reverted To Default"]);
+    }
+    // --------------------------------------------------------------------------------------------
+    public function storeAssets(Request $request){
+
+        $dropzone_helper = new DropzoneHelper("asset_logo");
+        $asset_logo = $dropzone_helper->getFiles();
+        $public_assets = public_path("assets");
+        if (!file_exists($public_assets)){
+            mkdir($public_assets);
+        }
+        foreach ($asset_logo as $asset){
+            copy($asset, $public_assets."/logo.png");
+        }
+        $dropzone_helper->clear_temp();
+        
+        return redirect()->back()->with(['message' => "Assets Updated!"]);
     }
     // --------------------------------------------------------------------------------------------
     public function storeGeneralSettings(Request $request) {

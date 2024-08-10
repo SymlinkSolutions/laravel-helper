@@ -30,6 +30,7 @@ Route::middleware(['web', "role:Developer"])->prefix("dev")->name('dev.')->group
 
     Route::get("", [HomeController::class, "showHome"])->name("index");
     Route::get("/assets", [HomeController::class, "showAssets"])->name("assets");
+    Route::post("/assets", [HomeController::class, "storeAssets"])->name("assets.store");
     Route::get("/build-sass", [HomeController::class, "updateStyles"])->name("update.styles");
     Route::get("/reset-colors", [HomeController::class, "reset_colors"])->name("reset.colors");
     Route::post("", [HomeController::class, "storeGeneralSettings"])->name("index.general.store");

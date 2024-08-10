@@ -18,7 +18,7 @@ class iDropzone implements FormInput {
     // ----------------------------------------------------------------------------------------------------
     //  Functions
     // ----------------------------------------------------------------------------------------------------
-    public function __construct($name, $options = []) {
+    public function __construct($name, $path = "/", $options = []) {
         $this->options = array_merge([
             "existingFiles" => [],
             "path" => false,
@@ -28,25 +28,17 @@ class iDropzone implements FormInput {
             "acceptedFiles" => "image/*",
             "id" => $name,
             "csrf_token" => csrf_token(),
+            "path" => "temp".$path,
         ], $options);
 
+        session(["dropzone.path.{$name}" => $this->options['path']]);
+
         $this->options['existingFiles'] = $this->getExistingFiles();
-        $this->options['path'] = $this->getPath();
-    }
-    // ----------------------------------------------------------------------------------------------------
-    public function getPath(){
-        $store = session('dropzone.path');
-        if (!$store) {
-            $breaker = Str::random(5);
-            $path = 'temp/'. $breaker . "/" . time() . '/';
-            $store = session(['dropzone.path' => $path]);
-        }
-        return $store;
     }
     // ----------------------------------------------------------------------------------------------------
     public function getExistingFiles() {
         $existingFiles = []; 
-        $path = $this->getPath();
+        $path = $this->options['path'];
         if ($path) {
             $files = Storage::disk('public')->files($path); 
             foreach ($files as $file) {

@@ -5,8 +5,10 @@ namespace Symlink\LaravelHelper\Helpers\Ui;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Number;
 use Symlink\LaravelHelper\Helpers\Ui\Intf\FormInput;
 use Symlink\LaravelHelper\Helpers\Ui\Traits\Component;
+use Symlink\LaravelHelper\Support\String\Str;
 
 class Image implements FormInput {
     // ----------------------------------------------------------------------------------------------------
@@ -38,6 +40,10 @@ class Image implements FormInput {
     }
     // ----------------------------------------------------------------------------------------------------
     public function get_src($src) {
+        if (!is_numeric($src)) return $this->assets($src);
+        
+        if (is_numeric($src)) return route("file.stream", $src); 
+
         if (!$src){
             if ($this->options['height']){
                 return "https://fakeimg.pl/{$this->options['width']}x{$this->options['height']}";
@@ -47,6 +53,13 @@ class Image implements FormInput {
         }
 
         return $src;
+    }
+    // ----------------------------------------------------------------------------------------------------
+    private function assets($src){
+        $path = (Str::replace(".", "/", $src)).".png";
+        if (file_exists(public_path($path))){
+            return asset($path);
+        }
     }
     // ----------------------------------------------------------------------------------------------------
     public function build() {

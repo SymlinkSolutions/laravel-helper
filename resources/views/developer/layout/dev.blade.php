@@ -11,7 +11,11 @@
 
     <link href="{{ asset("fonts/bootstrap-icons/bootstrap-icons.css") }}" rel="stylesheet">
     @foreach ($stylesheets as $stylesheet)
-        <link href="{{ $stylesheet }}" rel="stylesheet">
+        @if (str_contains( $stylesheet, "href"))
+            {!! $stylesheet !!}
+        @else
+            <link href="{{ $stylesheet }}" rel="stylesheet">
+        @endif
     @endforeach
 
 </head>
@@ -24,7 +28,13 @@
     @include('symlink::developer.includes.navbar')
     {{ $slot }}
 
-
+    @foreach ($javascript as $js)
+        @if (str_contains( $js, "<script"))
+            {!! $stylesheet !!}
+        @else
+            <script src="{{ $js }}"></script>
+        @endif
+    @endforeach
 </body>
 
 </html>

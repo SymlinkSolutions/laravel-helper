@@ -11,10 +11,9 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class DropzoneController extends Controller {
 
     public function upload(Request $request) {
-        $path = session('dropzone.path');
-
+        $path = $request->path;
         if (!$path) {
-            return response()->json(['error' => 'Session path not found.'], 500);
+            return response()->json(['error' => 'Path not found.'], 500);
         }
 
         // Check if it's a chunked upload
@@ -50,7 +49,7 @@ class DropzoneController extends Controller {
     }
 
     public function remove(Request $request) {
-        $path = session('dropzone.path');
+        $path = $request->path;
         $filename = $request->filename;
         $file = Storage::disk('public')->delete($path . "/" . $filename);
         Log::info($file);
@@ -59,3 +58,4 @@ class DropzoneController extends Controller {
     }
 
 }
+                    
