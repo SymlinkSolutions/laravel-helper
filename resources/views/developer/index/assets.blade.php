@@ -27,7 +27,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-12">
-                                    
+
                                 </div>
                                 <div class="col-12">
                                     <div class="row">
@@ -35,7 +35,11 @@
                                             {!! Html::image("assets.logo") !!}
                                         </div>
                                         <div class="col-6">
-                                            {!! Form::idropzone('asset_logo', "/asset/logo") !!}
+                                            {!! Form::idropzone('asset_logo', "/asset/logo", [
+                                                    "crop" => false,
+                                                    "crop_height" => 250,
+                                                    "crop_width" => 250,
+                                                ]) !!}
                                         </div>
                                     </div>
                                 </div>

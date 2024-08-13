@@ -42,18 +42,18 @@ class HomeController extends Controller {
     }
     // --------------------------------------------------------------------------------------------
     public function updateStyles(){
-        
+
 
         $sass_file = resource_path("/sass/generated/generatedBySymlink.scss");
         $sass = new Sass();
         $ini = new ConfigIniService();
-        
+
         if (config("app.env") != "local"){
             dd("test");
             return redirect()->route('dev.index')->with([
                 'message' => "Can only opdate in a local environment!",
                 "color" => "warning",
-            ]); 
+            ]);
         }
 
         if($font_primary = $ini->get("primary_font_family")) {
@@ -71,7 +71,7 @@ class HomeController extends Controller {
                 ],
             ]);
         }
-        
+
         $sass->writeTofile($sass_file);
 
         $bootstrap_sass = new Sass();
@@ -109,15 +109,17 @@ class HomeController extends Controller {
 
         $dropzone_helper = new DropzoneHelper("asset_logo");
         $asset_logo = $dropzone_helper->getFiles();
+
+
         $public_assets = public_path("assets");
         if (!file_exists($public_assets)){
             mkdir($public_assets);
         }
         foreach ($asset_logo as $asset){
-            copy($asset, $public_assets."/logo.png");
+            copy($asset['original'], $public_assets."/logo.png");
         }
         $dropzone_helper->clear_temp();
-        
+
         return redirect()->back()->with(['message' => "Assets Updated!"]);
     }
     // --------------------------------------------------------------------------------------------

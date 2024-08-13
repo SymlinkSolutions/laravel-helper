@@ -28,8 +28,17 @@ class iDropzone implements FormInput {
             "id" => $name,
             "csrf_token" => csrf_token(),
             "path" => "temp".$path,
+
             "cropped_path" => false,
+            "crop" => false,
+            "crop_height" => 1080,
+            "crop_width" => 1920,
+            "crop_aspect_ratio" => "1 / 1",
+
         ], $options);
+
+        if ($this->options['crop']) $this->options['limit'] = 1;
+        $this->options['crop_aspect_ratio'] = "{$this->options['crop_width']} / {$this->options['crop_height']}";
 
         session(["dropzone.path.{$name}" => $this->options['path']]);
 
@@ -37,15 +46,15 @@ class iDropzone implements FormInput {
     }
     // ----------------------------------------------------------------------------------------------------
     public function getExistingFiles() {
-        $existingFiles = []; 
+        $existingFiles = [];
         $path = $this->options['path'];
         if ($path) {
-            $files = Storage::disk('public')->files($path); 
+            $files = Storage::disk('public')->files($path);
             foreach ($files as $file) {
                 $existingFiles[] = [
-                    'name' => basename($file), 
-                    'size' => Storage::disk('public')->size($file), 
-                    'path' => Storage::url($file), 
+                    'name' => basename($file),
+                    'size' => Storage::disk('public')->size($file),
+                    'path' => Storage::url($file),
                 ];
             }
         }
@@ -55,6 +64,6 @@ class iDropzone implements FormInput {
     public function build() {
         return View::make('symlink::components.input.idropzone', $this->options)->render();
     }
-    
+
     // ----------------------------------------------------------------------------------------------------
 }

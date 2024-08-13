@@ -1,6 +1,7 @@
 <div class="dropzone" id="{{ $id }}"></div>
 <input type="hidden" id="{{ $id }}_path" value="{{ $path }}">
 
+
 <!-- Modal -->
 <div class="modal fade" id="modal_{{ $id }}" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -12,7 +13,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                
+
                 <div class="w-100 position-relative" style="height: auto;" id="{{ $id }}_image_wrapper">
                 </div>
 
@@ -49,7 +50,7 @@
             retryChunks: true,
             parallelChunkUploads: false,
             chunkSize: 1024 * 1024 * 1, // 1mb
-            maxFiles: {{ $limit ?? 'null' }},
+            maxFiles: {{ $limit }},
             init: function() {
                 let existingFiles =
                 {!! json_encode($existingFiles) !!}; // Fetch existing files from PHP variable
@@ -89,61 +90,59 @@
                     formData.append('path', '{{ $path }}')
                 });
                 this.on('success', function(file){
-                    let filename = file.upload.filename;
-                    $("#{{ $id }}_image_wrapper").append('<img id="{{ $id }}_image" style="max-width: 100%; display: block;" src="/storage/{{ $path }}/'+filename+'" alt="" />')
-                    
-                    $('#modal_{{ $id }}').modal('show');
-                    
-                    $('#modal_{{ $id }}').on('shown.bs.modal', function(){
-                        const image = document.getElementById('{{ $id }}_image');
-                        const cropper = new Cropper(image, {
-                            aspectRatio: 16 / 9,
-                            crop(event) {
-                            },
-                        });
+                    if ({{ $crop ? "true" : "false" }}) {
+                        let filename = file.upload.filename;
 
-                        
+                        $("#{{ $id }}_image_wrapper").append('<img id="{{ $id }}_image" style="max-width: 100%; display: block;" src="/storage/{{ $path }}/'+filename+'" alt="" />')
 
-                        
-                        function uploadCroppedImage() {
-                            cropper.getCroppedCanvas().toBlob((blob) => {
-                                const formData = new FormData();
+                        $('#modal_{{ $id }}').modal('show');
 
-                                formData.append('croppedImage', blob, filename);
-                                formData.append('path', '{{ $path }}');
-                                formData.append('id', '{{ $id }}');
-
-                                // Send the image to the server using AJAX
-                                $.ajax({
-                                    url: "{{ route('dropzone.cropped') }}", // Replace with your upload URL
-                                    method: 'POST',
-                                    data: formData,
-                                    headers: {
-                                        'X-CSRF-TOKEN': '{{ $csrf_token }}'
-                                    },
-                                    processData: false, // Prevent jQuery from automatically processing the data
-                                    contentType: false, // Prevent jQuery from setting the content type
-                                    success: function(response) {
-                                        console.log('Image uploaded successfully:', response);
-                                    },
-                                    error: function(error) {
-                                        console.error('Image upload failed:', error);
-                                    }
-                                });
+                        $('#modal_{{ $id }}').on('shown.bs.modal', function() {
+                            const image = document.getElementById('{{ $id }}_image');
+                            const cropper = new Cropper(image, {
+                                aspectRatio: {{ $crop_aspect_ratio }},
+                                crop(event) {
+                                },
                             });
-                        }
 
 
+                            function uploadCroppedImage() {
+                                cropper.getCroppedCanvas().toBlob((blob) => {
+                                    const formData = new FormData();
+
+                                    formData.append('croppedImage', blob, filename);
+                                    formData.append('path', '{{ $path }}');
+                                    formData.append('id', '{{ $id }}');
+
+                                    // Send the image to the server using AJAX
+                                    $.ajax({
+                                        url: "{{ route('dropzone.cropped') }}", // Replace with your upload URL
+                                        method: 'POST',
+                                        data: formData,
+                                        headers: {
+                                            'X-CSRF-TOKEN': '{{ $csrf_token }}'
+                                        },
+                                        processData: false, // Prevent jQuery from automatically processing the data
+                                        contentType: false, // Prevent jQuery from setting the content type
+                                        success: function (response) {
+                                            console.log('Image uploaded successfully:', response);
+                                        },
+                                        error: function (error) {
+                                            console.error('Image upload failed:', error);
+                                        }
+                                    });
+                                });
+                            }
 
 
-                        $('#crop_{{ $id }}').on('click', function(){
-                            uploadCroppedImage();
-                            $('#modal_{{ $id }}').modal('hide');
+                            $('#crop_{{ $id }}').on('click', function () {
+                                uploadCroppedImage();
+                                $('#modal_{{ $id }}').modal('hide');
+                            });
                         });
+                    }
 
-                    });
 
-                    
                 })
             }
         });

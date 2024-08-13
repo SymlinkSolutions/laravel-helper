@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ $title }}</title>
 
+    <link rel="icon" href="/assets/logo.png">
+
     @vite($vite_sass)
 
     <link href="{{ asset("fonts/bootstrap-icons/bootstrap-icons.css") }}" rel="stylesheet">
