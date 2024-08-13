@@ -2,7 +2,7 @@
 
 namespace Symlink\LaravelHelper\Helpers\Roles\Traits;
 
-use App\Models\Role as ModelsRole;
+use App\Models\Roles as ModelsRole;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Request;
 

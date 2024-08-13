@@ -2,7 +2,7 @@
 
 namespace Symlink\LaravelHelper\Console;
 
-use App\Models\Role;
+use App\Models\Roles;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 
@@ -40,14 +40,14 @@ class InstallSymlinkPackage extends Command {
         ]);
 
         $this->removeDefaultRoute();
-        
+
         $this->setupViewsFolder($force);
 
         $this->createRolesFolder($force);
-        
+
         $this->call('migrate');
-        
-        Role::syncWithClasslist();
+
+        Roles::syncWithClasslist();
 
         $this->info('Installed Symlink\LaravelHelper');
     }
@@ -73,7 +73,7 @@ class InstallSymlinkPackage extends Command {
         ];
 
         $viewsPath = resource_path('views');
-        
+
         if (File::exists($viewsPath)) {
             File::deleteDirectory($viewsPath, true);
             $this->info('Cleared all views from ' . $viewsPath);

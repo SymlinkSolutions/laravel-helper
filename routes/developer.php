@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Role;
+use App\Models\Roles;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -11,7 +11,7 @@ Route::middleware(['web', "role:Developer"])->prefix("dev")->name('dev.')->group
 
     Route::get("/test", function(){
         $path = 'temp/zdm8k/1722675455/Screenshot_22-4-2024_16610_symlink.local.jpeg';
-    
+
         // Check if the file exists
         if (!Storage::disk('public')->exists($path)) {
             return response()->json(['message' => 'File not found'], 404);
