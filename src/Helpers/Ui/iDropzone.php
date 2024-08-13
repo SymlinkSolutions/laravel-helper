@@ -21,7 +21,6 @@ class iDropzone implements FormInput {
     public function __construct($name, $path = "/", $options = []) {
         $this->options = array_merge([
             "existingFiles" => [],
-            "path" => false,
             "name" => false,
             "label" => "Drop files here to upload.",
             "limit" => 5,
@@ -29,6 +28,7 @@ class iDropzone implements FormInput {
             "id" => $name,
             "csrf_token" => csrf_token(),
             "path" => "temp".$path,
+            "cropped_path" => false,
         ], $options);
 
         session(["dropzone.path.{$name}" => $this->options['path']]);

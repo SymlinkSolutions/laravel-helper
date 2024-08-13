@@ -6,9 +6,33 @@ use Symlink\LaravelHelper\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class DropzoneController extends Controller {
+
+    public function upload_cropped(Request $request){
+        $path = $request->path;
+        if (!$path) {
+            return response()->json(['error' => 'Path not found.'], 500);
+        }
+
+        $filename = "cropped_{$request->file('croppedImage')->getClientOriginalName()}";
+        try {
+            // Store the file in the desired path
+            $file = $request->file('croppedImage')->storeAs( $path."/cropped", $filename, "public");
+    
+            // Log the file path for debugging
+            Log::info('File stored at: ' . storage_path('app/public/' . $file));
+    
+            // Return success response with the file path
+            return response()->json(['success' => $file], 200);
+        } catch (\Exception $e) {
+            // Log any error that occurs
+            Log::error('File upload error: ' . $e->getMessage());
+            return response()->json(['error' => 'File upload failed.'], 500);
+        }
+
+        return response()->json(['success' => $file], 200);
+    }
 
     public function upload(Request $request) {
         $path = $request->path;
@@ -52,8 +76,8 @@ class DropzoneController extends Controller {
         $path = $request->path;
         $filename = $request->filename;
         $file = Storage::disk('public')->delete($path . "/" . $filename);
-        Log::info($file);
-        $dir = Storage::disk('public')->deleteDirectory($path . "/" . $filename);
+        $file = Storage::disk('public')->delete($path . "/cropped/" . "cropped_".$filename);
+        $dir = Storage::disk('public')->deleteDirectory($path);
         return response()->json(['success' => true], 200);
     }
 

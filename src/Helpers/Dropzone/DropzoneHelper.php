@@ -15,10 +15,14 @@ class DropzoneHelper{
         Storage::disk('public')->deleteDirectory($path);
     }
 
-    public function getFiles() {
+    public function getFiles($options = []) {
+        $options = array_merge([
+            
+        ], $options);
         $path = session("dropzone.path.{$this->id}");
         $storagePath = Storage::disk('public')->path($path);
         $files = Storage::disk('public')->allFiles($path);
+        
         $return_arr = [];
         foreach($files as $file){
             $return_arr[] = $storagePath . "/" . basename($file);

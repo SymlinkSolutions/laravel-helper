@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ $title }}</title>
 
-    @vite(['resources/sass/system.scss', 'resources/js/system.js'])
+    @vite($vite_sass)
 
     <link href="{{ asset("fonts/bootstrap-icons/bootstrap-icons.css") }}" rel="stylesheet">
     @foreach ($stylesheets as $stylesheet)
@@ -17,6 +17,7 @@
             <link href="{{ $stylesheet }}" rel="stylesheet">
         @endif
     @endforeach
+
 
 </head>
 
@@ -28,6 +29,8 @@
     @include('symlink::developer.includes.navbar')
     {{ $slot }}
 
+
+    @vite($vite_javascript)
     @foreach ($javascript as $js)
         @if (str_contains( $js, "<script"))
             {!! $stylesheet !!}

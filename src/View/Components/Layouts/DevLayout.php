@@ -10,14 +10,26 @@ class DevLayout extends Component {
     // ----------------------------------------------------------------------------------------------------
     public $title = "Somting Went wrong getting the page title!";
     public $theme = "light";
-    public $stylesheets = [];
-    public $javascript = [];
+    public $stylesheets = [
+        "https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css",
+    ];
+    public $javascript = [
+        "https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js",
+        "https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js",
+    ];
+    public $vite_sass = [
+        'resources/sass/system.scss',
+    ];
+    public $vite_javascript = [
+        // 'vendor/components/jquery/jquery.js',
+        'vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js',
+        'resources/js/system.js',
+    ];
+
     // ----------------------------------------------------------------------------------------------------
     //  Functions
     // ----------------------------------------------------------------------------------------------------
     public function __construct() {
-        $this->stylesheets = $this->linkedStyleSheets();
-        $this->javascript = $this->linkedJs();
         $this->title = env("APP_NAME") . " | Dev Tools";
     }
     // ----------------------------------------------------------------------------------------------------
@@ -25,16 +37,12 @@ class DevLayout extends Component {
         return view('symlink::developer.layout.dev');
     }
     // ----------------------------------------------------------------------------------------------------
-    public function linkedJs() {
-        return [
-            "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js\" integrity=\"sha512-JyCZjCOZoyeQZSd5+YEAcFgz2fowJ1F1hyJOXgtKu4llIa0KneLcidn5bwfutiehUTiOuK87A986BZJMko0eWQ==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\"></script>"
-        ];
+    public function add_script($script) {
+        $this->javascript[] = $script;
     }
     // ----------------------------------------------------------------------------------------------------
-    public function linkedStyleSheets() {
-        return [
-            "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css\" integrity=\"sha512-UtLOu9C7NuThQhuXXrGwx9Jb/z9zPQJctuAgNUBK3Z6kkSYT9wJ+2+dh6klS+TDBCV9kNPBbAxbVD+vCcfGPaA==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\" />"
-        ];
+    public function linkedStyleSheets($css) {
+        $this->stylesheets = $css;
     }
     // ----------------------------------------------------------------------------------------------------
 }
