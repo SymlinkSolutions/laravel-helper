@@ -20,6 +20,7 @@ class ConfigIniService {
     }
     // ---------------------------------------------------------------------------------------
     protected function read() {
+        if (!file_exists($this->path)) {return false;}
         return parse_ini_file($this->path, true);
     }
     // ---------------------------------------------------------------------------------------
