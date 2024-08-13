@@ -3,14 +3,19 @@ import laravel from 'laravel-vite-plugin';
 import path from 'path';  // Add this line to import the path module
 
 export default defineConfig({
+    resolve:{
+        alias:{
+            '@': path.resolve(__dirname, "./"),
+        }
+    },
     plugins: [
         laravel({
             input: [
-                'resources/sass/app.scss', 
-                'resources/sass/system.scss', 
-                'resources/sass/website.scss', 
-                'resources/sass/guest.scss', 
-                
+                'resources/sass/app.scss',
+                'resources/sass/system.scss',
+                'resources/sass/website.scss',
+                'resources/sass/guest.scss',
+
                 'resources/js/app.js',
                 'resources/js/system.js',
                 'resources/js/website.js',
@@ -21,5 +26,5 @@ export default defineConfig({
             ],
             refresh: true,
         }),
-    ], 
+    ],
 });

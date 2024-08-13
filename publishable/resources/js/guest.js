@@ -1,1 +1,1 @@
-import '../../vendor/symlink/laravel-helper/resources/js/guest.js';
+import '@/vendor/symlink/laravel-helper/resources/js/guest.js';

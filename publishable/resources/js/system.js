@@ -1,1 +1,1 @@
-import '../../vendor/symlink/laravel-helper/resources/js/system.js';
+import '@/vendor/symlink/laravel-helper/resources/js/system.js';
