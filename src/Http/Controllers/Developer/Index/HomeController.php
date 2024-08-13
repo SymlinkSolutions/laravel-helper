@@ -116,7 +116,7 @@ class HomeController extends Controller {
             mkdir($public_assets);
         }
         foreach ($asset_logo as $asset){
-            copy($asset['original'], $public_assets."/logo.png");
+            copy($asset['cropped'], $public_assets."/logo.png");
         }
         $dropzone_helper->clear_temp();
 
