@@ -36,7 +36,7 @@
                                         </div>
                                         <div class="col-6">
                                             {!! Form::idropzone('asset_logo', "/asset/logo", [
-                                                    "crop" => false,
+                                                    "crop" => true,
                                                     "crop_height" => 250,
                                                     "crop_width" => 250,
                                                 ]) !!}
