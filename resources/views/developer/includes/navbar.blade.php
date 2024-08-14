@@ -22,7 +22,7 @@
 
             <div>
                 <a href="{{ route('home') }}" class="btn btn-outline-warning" target="_blank">Website</a>
-                <a href="{{ route('home') }}" class="btn btn-outline-warning" target="_blank">System</a>
+                <a href="{{ route('system.index') }}" class="btn btn-outline-warning" target="_blank">System</a>
             </div>
 
         </div>
