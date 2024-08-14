@@ -28,7 +28,7 @@
     <x-symlink-notification />
     <x-symlink-spinner />
 
-    @include('symlink::system.layout.includes.navbar')
+    @include('symlink::website.layout.includes.navbar')
 
     {{ $slot }}
 

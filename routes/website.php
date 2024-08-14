@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Symlink\LaravelHelper\Http\Controllers\System\Index\HomeController;
+use Symlink\LaravelHelper\Http\Controllers\Website\Index\HomeController;
 
-Route::middleware(['web', "role:Developer"])->prefix("system")->name('system.')->group(function(){
+Route::middleware(['web'])->name('website.')->group(function(){
     Route::get("", [HomeController::class, "showHome"])->name("index");
 
 

@@ -159,6 +159,12 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
         ], "symlink-system");
 
         $this->publishes([
+            "{$this->root}/src/View/Components/Layouts/WebsiteLayout.php" => app_path("View/Components/Layouts/WebsiteLayout.php"),
+            "{$this->root}/resources/views/website" => resource_path("views/website"),
+            "{$this->root}/routes/website.php" => base_path("routes/website.php"),
+        ], "symlink-website");
+
+        $this->publishes([
             "{$this->root}/publishable/public/web.config" => public_path("web.config"),
         ], "symlink-iis");
     }
@@ -178,6 +184,7 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
     protected function registerRoutes() {
         $this->loadRoutesFrom("{$this->root}/routes/developer.php");
         $this->loadRoutesFrom("{$this->root}/routes/system.php");
+        $this->loadRoutesFrom("{$this->root}/routes/website.php");
         $this->loadRoutesFrom("{$this->root}/routes/auth.php");
         $this->loadRoutesFrom("{$this->root}/routes/files.php");
         $this->loadRoutesFrom("{$this->root}/routes/guest.php");
