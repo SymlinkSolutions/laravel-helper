@@ -4,6 +4,9 @@ namespace Symlink\LaravelHelper;
 
 use Illuminate\Support\ServiceProvider;
 use Symlink\LaravelHelper\Console\InstallSymlinkPackage;
+use Symlink\LaravelHelper\Http\Middleware\Auth\Access;
+use Symlink\LaravelHelper\View\Components\Layouts\SystemLayout;
+use Symlink\LaravelHelper\View\Components\Layouts\WebsiteLayout;
 use Symlink\LaravelHelper\View\Components\Notification;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Foundation\AliasLoader;
@@ -22,7 +25,7 @@ use Symlink\LaravelHelper\View\Components\Spinner;
 /**
  * Examples and Guidence from
  * https://www.laravelpackage.com
- * 
+ *
  */
 
 class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
@@ -59,7 +62,18 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
         $this->loadComponents();
 
         $router->aliasMiddleware("role", Role::class);
+        $router->aliasMiddleware("access", Access::class);
 
+        $this->bladeDirectives();
+
+        // $this->mergeAliases();
+
+        // $kernel->pushMiddleware(CapitalizeTitle::class);
+    }
+    // ----------------------------------------------------------------------------------------------------
+    // Other Functions
+    // ----------------------------------------------------------------------------------------------------
+    protected function bladeDirectives() {
         Blade::if('role', function ($role) {
             /**
              * @var App\Models\User
@@ -68,12 +82,23 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
             return auth()->check() && $user->hasRole($role);
         });
 
-        // $this->mergeAliases();
+        Blade::if('access', function ($group) {
+            if (session("user.".auth()->user()->id . ".group.{$group}")) {
+                return true;
+            }
 
-        // $kernel->pushMiddleware(CapitalizeTitle::class);
+            $classname = "Symlink\LaravelHelper\Helpers\Roles\Access\\".$group;
+            $access = new $classname();
+
+            $roles = $access->getRoles();
+            foreach ($roles as $role) {
+                if (auth()->user()->hasRole($role)) {
+                    return true;
+                }
+            }
+            return false;
+        });
     }
-    // ----------------------------------------------------------------------------------------------------
-    // Other Functions
     // ----------------------------------------------------------------------------------------------------
     protected function bootAliases(){
         $this->app->alias("form", \Symlink\LaravelHelper\Facades\Form::class);
@@ -128,6 +153,12 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
         ], "symlink-models");
 
         $this->publishes([
+            "{$this->root}/src/View/Components/Layouts/SystemLayout.php" => app_path("View/Components/Layouts/SystemLayout.php"),
+            "{$this->root}/resources/views/system" => resource_path("views/system"),
+            "{$this->root}/routes/system.php" => base_path("routes/system.php"),
+        ], "symlink-system");
+
+        $this->publishes([
             "{$this->root}/publishable/public/web.config" => public_path("web.config"),
         ], "symlink-iis");
     }
@@ -137,6 +168,8 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
             'layouts-guest-layout' => GuestLayout::class,
             'layouts-auth-layout' => AuthLayout::class,
             'layouts-dev-layout' => DevLayout::class,
+            'layouts-system-layout' => SystemLayout::class,
+            'layouts-website-layout' => WebsiteLayout::class,
             Notification::class,
             Spinner::class,
         ]);
@@ -144,6 +177,7 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
     // ----------------------------------------------------------------------------------------------------
     protected function registerRoutes() {
         $this->loadRoutesFrom("{$this->root}/routes/developer.php");
+        $this->loadRoutesFrom("{$this->root}/routes/system.php");
         $this->loadRoutesFrom("{$this->root}/routes/auth.php");
         $this->loadRoutesFrom("{$this->root}/routes/files.php");
         $this->loadRoutesFrom("{$this->root}/routes/guest.php");
