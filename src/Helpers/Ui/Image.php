@@ -40,10 +40,6 @@ class Image implements FormInput {
     }
     // ----------------------------------------------------------------------------------------------------
     public function get_src($src) {
-        if (!is_numeric($src)) return $this->assets($src);
-        
-        if (is_numeric($src)) return route("file.stream", $src); 
-
         if (!$src){
             if ($this->options['height']){
                 return "https://fakeimg.pl/{$this->options['width']}x{$this->options['height']}";
@@ -51,6 +47,11 @@ class Image implements FormInput {
                 return "https://fakeimg.pl/{$this->options['width']}";
             }
         }
+        
+        if (!is_numeric($src)) return $this->assets($src);
+
+        if (is_numeric($src)) return route("file.stream", $src);
+
 
         return $src;
     }
