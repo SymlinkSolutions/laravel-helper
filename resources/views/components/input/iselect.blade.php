@@ -4,7 +4,13 @@
     <div class="form-floating has-validation">
         <select class="form-select @if($errors && $errors->has($id)) is-invalid @endif" name="{{ $id }}"
             id="{{ $id }}" aria-label="{{ $label }}">
-            {{ $slot }}
+
+
+            @foreach($data as $key => $label)
+                <option value="{{ $key }}" @if($value == $key) selected @endif>{{ $label }}</option>
+            @endforeach
+
+
         </select>
         <label for="{{ $id }}">{{ $label }}</label>
         @if($errors && $errors->has($id))

@@ -15,9 +15,17 @@ class Access {
             return $next($request);
         }
 
-
+        $app_classname = "App\Helpers\Roles\Access\\".$group;
         $classname = "Symlink\LaravelHelper\Helpers\Roles\Access\\".$group;
-        $access = new $classname();
+
+        if (class_exists($app_classname)){
+            $access = new $app_classname();
+        } else if (class_exists($classname)) {
+            $access = new $classname();
+        } else {
+            return redirect()->route('unauthorized');
+        }
+
 
         $roles = $access->getRoles();
         foreach ($roles as $role) {
