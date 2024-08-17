@@ -6,8 +6,8 @@
             id="{{ $id }}" aria-label="{{ $label }}">
 
 
-            @foreach($data as $key => $label)
-                <option value="{{ $key }}" @if($value == $key) selected @endif>{{ $label }}</option>
+            @foreach($data as $key => $v)
+                <option value="{{ $key }}" @if($value == $key) selected @endif>{{ $v }}</option>
             @endforeach
 
 
