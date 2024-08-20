@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('file_items', function (Blueprint $table) {
-            $table->foreignId('file_item_id')->nullable()->default(null)->constrained()->references('id')->on('file_items');
+            $table->foreignId('file_item_id')->nullable()->default('null')->constrained()->references('id')->on('file_items');
             $table->string("file_item_type")->nullable();
         });
     }
