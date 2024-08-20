@@ -21,7 +21,7 @@ trait HasFiles {
             "group" => "default",
             "path" => false,
             "original" => false,
-            "type" => FileItemTypeEnum::CROPPED->name,
+            "type" => FileItemTypeEnum::ORIGINAL->name,
         ], $options);
         if (!$disk) $disk = config("filesystems.default");
 

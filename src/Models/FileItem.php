@@ -33,4 +33,9 @@ class FileItem extends Model {
         return $this->morphTo();
     }
 
+    public function scopeGroup($query, $group = 'default')
+    {
+        return $query->where('group', $group);
+    }
+
 }
