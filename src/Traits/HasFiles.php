@@ -58,6 +58,18 @@ trait HasFiles {
         $file_item = $this->files()->save($new_file_item);
 
         Storage::disk($disk)->putFileAs($file_item->path, $path, $file_item->file_name);
+
+        return $file_item;
+    }
+    // ------------------------------------------------------------------------------------------
+    public function deleteFiles($group = "default", $options = []) {
+        $options = array_merge([
+            
+        ], $options);
+        $files = $this->getFiles($group, $options);
+        foreach ($files as $file) {
+            $file->delete();
+        }
     }
     // ------------------------------------------------------------------------------------------
     public function getFiles($group = "default", $options = []){
