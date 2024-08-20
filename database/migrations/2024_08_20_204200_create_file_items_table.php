@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::table('file_items', function (Blueprint $table) {
             $table->foreignId('file_item_id')->nullable()->references('id')->on('file_items');
             $table->string("file_item_type")->nullable();
+            $table->foreignId("file_data_id")->nullable()->constrained("file_data");
         });
     }
 
@@ -23,8 +24,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('file_items', function (Blueprint $table) {
-            $table->dropForeign(['cropped_file_item_id']);
-            $table->dropColumn('cropped_file_item_id');
+            $table->dropForeign(['file_data_id']);
+            $table->dropForeign(['file_item_id']);
+            $table->dropColumn('file_item_id');
             $table->dropColumn('file_item_type');
         });
     }
