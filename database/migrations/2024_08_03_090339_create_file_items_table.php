@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('file_items', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId("file_data_id")->nullable()->constrained("file_data");
+            $table->foreignId("file_data_id")->nullable()->constrained("file_data")->cascadeOnDelete();
             $table->string("file_name")->nullable();
             $table->string("file_extension")->nullable();
             $table->string("file_size")->nullable();

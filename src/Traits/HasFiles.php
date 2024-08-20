@@ -64,10 +64,11 @@ trait HasFiles {
     // ------------------------------------------------------------------------------------------
     public function deleteFiles($group = "default", $options = []) {
         $options = array_merge([
-            
+
         ], $options);
         $files = $this->getFiles($group, $options);
         foreach ($files as $file) {
+            Storage::disk($file->disk)->delete($file->path);
             $file->delete();
         }
     }
@@ -76,7 +77,7 @@ trait HasFiles {
         $options = array_merge([
 
         ], $options);
-        $file_items = $this->files()->where('group', $group)->get();
+        $file_items = $this->files()->where('group', $group)->orderBy("file_item_id", "DESC")->get();
         return $file_items;
     }
     // ------------------------------------------------------------------------------------------
