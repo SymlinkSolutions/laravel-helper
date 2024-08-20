@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Symlink\LaravelHelper\Enums\FileItem\FileItemTypeEnum;
 use Symlink\LaravelHelper\Support\String\Str;
 
 trait HasFiles {
@@ -19,9 +20,11 @@ trait HasFiles {
         $options = array_merge([
             "group" => "default",
             "path" => false,
+            "original" => false,
+            "type" => FileItemTypeEnum::CROPPED->name,
         ], $options);
         if (!$disk) $disk = config("filesystems.default");
-        
+
         /**
          * @var App\Models\User;
          */
@@ -48,6 +51,8 @@ trait HasFiles {
             "size" => $size,
             "user_id" => $id,
             "path" => $options['path'],
+            "file_item_id" => $options['original'] ? $options['original']->id : null,
+            "file_item_type" => $options['type'],
         ]);
 
         $file_item = $this->files()->save($new_file_item);
@@ -57,7 +62,7 @@ trait HasFiles {
     // ------------------------------------------------------------------------------------------
     public function getFiles($group = "default", $options = []){
         $options = array_merge([
-            
+
         ], $options);
         $file_items = $this->files()->where('group', $group)->get();
         return $file_items;
@@ -65,7 +70,7 @@ trait HasFiles {
     // ------------------------------------------------------------------------------------------
     public function getFileStreamUrl($mixed, $options = []){
         $options = array_merge([
-            
+
         ], $options);
         $baseUrl = config("app.url");
         return "{$baseUrl}/stream/{$mixed}";

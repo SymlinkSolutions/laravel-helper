@@ -21,6 +21,8 @@ class FileItem extends Model {
         "disk",
         "mime_type",
         "path",
+        "file_item_id",
+        "file_item_type",
     ];
 
     public function file_item() {
