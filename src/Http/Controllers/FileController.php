@@ -14,11 +14,11 @@ class FileController extends Controller {
 
     public function stream($id) {
         if (Str::isUuid($id)){
-            $file_item = FileItem::uuid($id);
+            $file_item = FileItem::uuid($id)->first();
         } else {
             $file_item = FileItem::find($id);
         }
-        
+
         if (!$file_item) {
             return response()->json(['message' => 'File Item not found'], 404);
         }

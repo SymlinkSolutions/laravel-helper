@@ -47,13 +47,11 @@ class Image implements FormInput {
                 return "https://fakeimg.pl/{$this->options['width']}";
             }
         }
-        
-        if (!is_numeric($src)) return $this->assets($src);
 
-        if (is_numeric($src)) return route("file.stream", $src);
+        if (!is_numeric($src) && !Str::isUuid($src)) return $this->assets($src);
 
+        return route("file.stream", $src);
 
-        return $src;
     }
     // ----------------------------------------------------------------------------------------------------
     private function assets($src){
