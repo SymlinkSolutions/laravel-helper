@@ -44,5 +44,9 @@ class FileItem extends Model {
         return $query->where('file_item_type', $type);
     }
 
-    
+    public function stream() {
+        $baseUrl = config("app.url");
+        return "{$baseUrl}/stream/{$this->id}";
+    }
+
 }
