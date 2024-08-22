@@ -4,6 +4,7 @@ namespace Symlink\LaravelHelper\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Symlink\LaravelHelper\Enums\FileItem\FileItemTypeEnum;
 use Symlink\LaravelHelper\Traits\HasCustomUuid;
 
 class FileItem extends Model {
@@ -38,4 +39,10 @@ class FileItem extends Model {
         return $query->where('group', $group);
     }
 
+    public function scopeType($query, $type = FileItemTypeEnum::ORIGINAL->name)
+    {
+        return $query->where('file_item_type', $type);
+    }
+
+    
 }
