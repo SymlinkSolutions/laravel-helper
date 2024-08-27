@@ -3,6 +3,7 @@
 namespace Symlink\LaravelHelper\Traits;
 
 use App\Models\FileItem;
+use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -68,7 +69,8 @@ trait HasFiles {
         ], $options);
         $files = $this->getFiles($group, $options);
         foreach ($files as $file) {
-            Storage::disk($file->disk)->delete($file->path);
+            Storage::disk($file->disk)->delete($file->path.$file->file_name);
+            Storage::disk($file->disk)->deleteDirectory($file->path);
             $file->delete();
         }
     }
