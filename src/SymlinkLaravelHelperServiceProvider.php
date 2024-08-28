@@ -43,6 +43,7 @@ class SymlinkLaravelHelperServiceProvider extends ServiceProvider {
      */
     public function register() {
         $this->mergeConfigFrom("{$this->root}/config/symlinkLaravelHelper.php", 'laravel-helper');
+        $this->app->register(\Barryvdh\DomPDF\ServiceProvider::class);
     }
     // ----------------------------------------------------------------------------------------------------
     /**
