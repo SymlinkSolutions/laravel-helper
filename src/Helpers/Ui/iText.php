@@ -28,6 +28,7 @@ class iText implements FormInput {
             'type' => 'text',
             "hidden" => false,
             'value' => $value,
+            'prepend' => false,
         ], $options);
 
 
