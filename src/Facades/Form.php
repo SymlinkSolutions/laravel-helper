@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Facade;
 use Symlink\LaravelHelper\Helpers\Ui\iCheckbox;
 use Symlink\LaravelHelper\Helpers\Ui\iColorPicker;
 use Symlink\LaravelHelper\Helpers\Ui\iDropzone;
+use Symlink\LaravelHelper\Helpers\Ui\iHidden;
 use Symlink\LaravelHelper\Helpers\Ui\iSelect;
 use Symlink\LaravelHelper\Helpers\Ui\iText;
 use Symlink\LaravelHelper\Helpers\Ui\iTextArea;
@@ -55,7 +56,7 @@ class Form extends Facade {
     }
     //------------------------------------------------------------------------------
     public static function ihidden($name, $value, $options=[]){
-        $itext = new iDropzone($name, $value, $options);
+        $itext = new iHidden($name, $value, $options);
         return $itext->build();
     }
     //------------------------------------------------------------------------------
