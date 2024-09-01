@@ -15,21 +15,17 @@ class iHidden implements FormInput {
     // ----------------------------------------------------------------------------------------------------
     //  Properties
     // ----------------------------------------------------------------------------------------------------
-    protected $name;
-    protected $value;
     protected $options;
     // ----------------------------------------------------------------------------------------------------
     //  Functions
     // ----------------------------------------------------------------------------------------------------
-    public function __construct($name, $label, $value = '', $options = []) {
+    public function __construct($name, $value = '', $options = []) {
         $this->options = array_merge([
             'name' => $name,
             'value' => $value,
         ], $options);
 
 
-        $this->name = $name;
-        $this->value = $value;
     }
     // ----------------------------------------------------------------------------------------------------
     public function build() {
