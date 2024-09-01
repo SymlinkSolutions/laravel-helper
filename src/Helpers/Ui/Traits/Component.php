@@ -10,7 +10,7 @@ trait Component {
     // ----------------------------------------------------------------------------------------------------
     /**
      * Extracts class list from the options array.
-     * 
+     *
      * @return string
      */
     public function extract_classlist() {
@@ -28,6 +28,23 @@ trait Component {
 
         // Return class names as a space-separated string
         return implode(' ', $classList);
+    }
+    // ----------------------------------------------------------------------------------------------------
+    /**
+     * @return string
+     */
+    public function extract_attributes() {
+        $return = [];
+
+        foreach ($this->options as $key => $value) {
+            if (strpos($key, '@') === 0 && $value === true) {
+                $key = substr($key, 1);
+                $return[] = "{$key} = '{$value}'";
+            }
+        }
+
+        // Return class names as a space-separated string
+        return implode(' ', $return);
     }
     // ----------------------------------------------------------------------------------------------------
     public function view($view) {
