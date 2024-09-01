@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\View;
 use Symlink\LaravelHelper\Helpers\Ui\Intf\FormInput;
 use Symlink\LaravelHelper\Helpers\Ui\Traits\Component;
 
-class iText implements FormInput {
+class iHidden implements FormInput {
     // ----------------------------------------------------------------------------------------------------
     use Component;
     // ----------------------------------------------------------------------------------------------------
@@ -23,9 +23,7 @@ class iText implements FormInput {
     // ----------------------------------------------------------------------------------------------------
     public function __construct($name, $label, $value = '', $options = []) {
         $this->options = array_merge([
-            'id' => $name,
-            'label' => $label,
-            'type' => 'text',
+            'name' => $name,
             'value' => $value,
         ], $options);
 
@@ -35,10 +33,8 @@ class iText implements FormInput {
     }
     // ----------------------------------------------------------------------------------------------------
     public function build() {
-        if ($this->options['hidden'])
-            $this->options['type'] = "password";
 
-        return $this->view('symlink::components.input.itext');
+        return $this->view('symlink::components.input.ihidden');
     }
 
     // ----------------------------------------------------------------------------------------------------
