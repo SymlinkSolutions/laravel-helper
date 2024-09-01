@@ -50,6 +50,7 @@ trait Component {
     public function view($view) {
         $attr = [
             "errors" => Request::session()->get('errors'),
+            "attributes" => $this->extract_attributes(),
         ];
 
         if (isset($this->options['value']) && !$this->options['value']) $this->options['value'] = Request::old($this->name);
