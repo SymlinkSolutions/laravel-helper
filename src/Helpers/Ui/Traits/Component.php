@@ -37,12 +37,11 @@ trait Component {
         $return = [];
 
         foreach ($this->options as $key => $value) {
-            if (strpos($key, '@') === 0 && $value === true) {
+            if (strpos($key, '@') === 0) {
                 $key = substr($key, 1);
-                $return[] = "{$key} = '{$value}'";
+                $return[] = "{$key} = {$value}";
             }
         }
-
         // Return class names as a space-separated string
         return implode(' ', $return);
     }
