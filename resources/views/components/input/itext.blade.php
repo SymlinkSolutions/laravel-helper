@@ -23,5 +23,9 @@
                 </div>
             @endif
         </div>
+        @if($append)
+            <!-- Prepend Section -->
+            <span class="input-group-text">{{ $append }}</span>
+        @endif
     </div>
 </div>
