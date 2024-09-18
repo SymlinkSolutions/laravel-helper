@@ -121,4 +121,8 @@ class User extends Authenticatable {
         return 'Symlink\LaravelHelper\Helpers\Roles\\' . $class;
     }
     // ------------------------------------------------------------------------------------------
+    public function banking_details(){
+        return $this->hasMany(BankingDetails::class);
+    }
+    // ------------------------------------------------------------------------------------------
 }
