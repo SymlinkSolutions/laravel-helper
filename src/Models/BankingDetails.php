@@ -15,6 +15,7 @@ class BankingDetails extends Model {
         "account_number",
         "bank_name",
         "branch_code",
+        "account_holder",
         "user_id",
     ];
 
