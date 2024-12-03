@@ -1,49 +1,37 @@
 <x-symlink-layouts-auth-layout>
 
+    <div class="container-fluid vh-100 d-flex justify-content-center align-items-center">
+        <div class="card col-12 col-md-6 col-lg-5 p-0">
+            <div class="row g-0">
+                <div class="col-5 d-none d-md-block">
+                    <img src="{{ asset('images/illustrations/login.svg') }}" class="img-fluid" alt="">
+                </div>
+                <div class="col-12 col-md-7">
+                    <div class="card-body p-4 p-md-5">
+                        <h3 class="mb-4">Login</h3>
+                        <form action="{{ route('login') }}" method="POST">
+                            @csrf
+                            @method('post')
 
-    <div class="container-fluid vh-100">
-        <div class="row justify-content-center align-items-center h-100">
-            <div class="col-12 col-md-6 col-lg-5">
-                <div class="card">
-                    
-                    <div class="row p-3">
-                        <div class="col-5 p-3 d-flex align-items-center justify-content-center">
-                            {!! Html::image() !!}
-                        </div>
-                        <div class="col-7 p-3">
-                            <div class="row">
-                                <p class="fs-4">Login</p>
+                            {!! Form::itext("email", "Email") !!}
+
+                            {!! Form::itext("password", "Password", false, [
+                                "hidden" => true
+                            ]) !!}
+
+                            {!! Form::icheckbox("remember_me", "Rememener Me!") !!}
+
+                            <div class="d-grid gap-2">
+                                {!! Form::submit("Login", ["class" => "btn btn-primary"]) !!}
+
+                                <a href="{{ route('register') }}" class="btn btn-outline-secondary">Register With Email</a>
                             </div>
-                            <form action="{{ route('login') }}" method="POST">
-                                @csrf
-                                @method('post')
-                                
-                                {!! Form::itext("email", "Email") !!}
-
-                                {!! Form::itext("password", "Password", false, [
-                                    "hidden" => true
-                                ]) !!}
-
-                                {!! Form::icheckbox("remember_me", "Rememener Me!") !!}
-
-                                <div class="row">
-                                    <div class="col-6">
-                                        {!! Form::submit("Login") !!}
-                                    </div>
-                                    <div class="col-6">
-                                        <a href="{{ route('register') }}" class="btn btn-outline-secondary w-100">Register With Email</a>
-                                    </div>
-                                </div>
-
-
-                            </form>
-                        </div>
+                        </form>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 
-
 </x-symlink-layouts-auth-layout>
+
